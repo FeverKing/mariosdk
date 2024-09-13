@@ -37,3 +37,14 @@ if err != nil {
     // do something
 }
 ```
+
+#### Get Users' Info From Competition
+
+```go
+req := &sdkreq.GetUserInfoForCompetitionReq{
+		CompetitionId: "",
+		SecretKey:     "",
+		UserId:        "",
+	}
+res, err := client.GetUserInfoForCompetition(req)
+```

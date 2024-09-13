@@ -31,3 +31,30 @@ func (c *DefaultClient) GetBatchUserInfo(ids []string) (*sdkmodel.BatchUserInfoM
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) SearchPublicProblem(req *sdkreq.SearchPublicProblemReq) (*sdkmodel.SearchPublicProblemModel, error) {
+	res, err := c.apiClient.CallSearchPublicProblemApi(req)
+	if err != nil {
+		sdklog.Errorf("search public problem failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetUserInfoForCompetition(req *sdkreq.GetUserInfoForCompetitionReq) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
+	res, err := c.apiClient.CallGetUserInfoForCompetitionApi(req)
+	if err != nil {
+		sdklog.Errorf("get user info for competition failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) CheckCompetitionPrivilege(req *sdkreq.CheckCompetitionPrivilegeReq) (*sdkmodel.CheckCompetitionPrivilegeModel, error) {
+	res, err := c.apiClient.CallCheckCompetitionPrivilegeApi(req)
+	if err != nil {
+		sdklog.Errorf("check competition privilege failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}

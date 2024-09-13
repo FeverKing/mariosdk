@@ -21,3 +21,36 @@ type BatchUserInfoModel struct {
 		Avatar string `json:"avatar"`
 	} `json:"users"`
 }
+
+type SearchPublicProblemModel struct {
+	Problems []struct {
+		Id          string      `json:"id"`
+		Name        string      `json:"name"`
+		CreateId    string      `json:"createId"`
+		OwnerId     string      `json:"ownerId"`
+		ProblemType int         `json:"problemType"`
+		Tags        interface{} `json:"tags"`
+		Attachments interface{} `json:"attachments"`
+		CreateName  string      `json:"createName"`
+		Permission  int         `json:"permission"`
+		Difficulty  int         `json:"difficulty"`
+		PublicId    string      `json:"publicId"`
+		PublicType  int         `json:"publicType"`
+		Desc        string      `json:"desc"`
+		IsSolved    bool        `json:"isSolved"`
+	} `json:"problems"`
+	Total int `json:"total"`
+}
+
+type GetUserInfoForCompetitionModel struct {
+	UserId     string `json:"userId"`
+	Username   string `json:"username"`
+	Password   string `json:"password"`
+	Email      string `json:"email"`
+	UserAvatar string `json:"userAvatar"`
+	Motto      string `json:"motto"`
+}
+
+type CheckCompetitionPrivilegeModel struct {
+	Role int `json:"role"`
+}
