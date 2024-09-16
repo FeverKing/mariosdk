@@ -18,6 +18,24 @@ type CheckCompetitionPrivilegeReq struct {
 	UserId        string `json:"userId"`
 }
 
+type StartChallengeContainerReq struct {
+	CompetitionId string   `json:"competitionId"`
+	SecretKey     string   `json:"secretKey"`
+	ContainerId   string   `json:"containerId"`
+	DockerImage   string   `json:"dockerImage"`
+	HttpPort      []string `json:"httpPort"`
+	TcpPort       []string `json:"tcpPort"`
+	IsStatic      bool     `json:"isStatic"`
+	Env           string   `json:"env"`
+	Flag          string   `json:"flag"`
+}
+
+type StopChallengeContainerReq struct {
+	CompetitionId string `json:"competitionId"`
+	SecretKey     string `json:"secretKey"`
+	ContainerId   string `json:"containerId"`
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -44,4 +62,32 @@ func (ac *ApiClient) CallCheckCompetitionPrivilegeApi(request interface{}) (*sdk
 	}
 	sdklog.Infof("got check competition privilege resp: %v", checkCompetitionPrivilegeResp)
 	return &checkCompetitionPrivilegeResp, nil
+}
+
+func (ac *ApiClient) CallStartChallengeContainerApi(request interface{}) (*sdkmodel.StartChallengeContainerModel, error) {
+	res, err := ac.CallApi("/competition/startChallengeContainer", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+	var startChallengeContainerResp sdkmodel.StartChallengeContainerModel
+	err = json.Unmarshal(ConvertInterfaceToJson(res), &startChallengeContainerResp)
+	if err != nil {
+		return nil, err
+	}
+	sdklog.Infof("got start challenge container resp: %v", startChallengeContainerResp)
+	return &startChallengeContainerResp, nil
+}
+
+func (ac *ApiClient) CallStopChallengeContainerApi(request interface{}) (*sdkmodel.StopChallengeContainerModel, error) {
+	res, err := ac.CallApi("/competition/stopChallengeContainer", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+	var stopChallengeContainerResp sdkmodel.StopChallengeContainerModel
+	err = json.Unmarshal(ConvertInterfaceToJson(res), &stopChallengeContainerResp)
+	if err != nil {
+		return nil, err
+	}
+	sdklog.Infof("got stop challenge container resp: %v", stopChallengeContainerResp)
+	return &stopChallengeContainerResp, nil
 }

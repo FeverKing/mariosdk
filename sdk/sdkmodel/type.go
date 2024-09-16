@@ -54,3 +54,14 @@ type GetUserInfoForCompetitionModel struct {
 type CheckCompetitionPrivilegeModel struct {
 	Role int `json:"role"`
 }
+
+type StartChallengeContainerModel struct {
+	Address     []string `json:"address"`
+	ContainerId string   `json:"containerId"`
+	RestTime    int      `json:"restTime"`
+}
+
+type StopChallengeContainerModel struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+}

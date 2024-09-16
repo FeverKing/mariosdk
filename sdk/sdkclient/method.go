@@ -58,3 +58,21 @@ func (c *DefaultClient) CheckCompetitionPrivilege(req *sdkreq.CheckCompetitionPr
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) StartChallengeContainer(req *sdkreq.StartChallengeContainerReq) (*sdkmodel.StartChallengeContainerModel, error) {
+	res, err := c.apiClient.CallStartChallengeContainerApi(req)
+	if err != nil {
+		sdklog.Errorf("start challenge container failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) StopChallengeContainer(req *sdkreq.StopChallengeContainerReq) (*sdkmodel.StopChallengeContainerModel, error) {
+	res, err := c.apiClient.CallStopChallengeContainerApi(req)
+	if err != nil {
+		sdklog.Errorf("stop challenge container failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
