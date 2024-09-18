@@ -2,8 +2,8 @@ package sdkreq
 
 import (
 	"encoding/json"
-	"mariosdk/sdk/sdklog"
-	"mariosdk/sdk/sdkmodel"
+	"github.com/FeverKing/mariosdk/sdk/sdklog"
+	"github.com/FeverKing/mariosdk/sdk/sdkmodel"
 )
 
 type GetUserInfoForCompetitionReq struct {

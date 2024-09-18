@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"github.com/FeverKing/mariosdk/sdk/sdkmodel"
 	"io"
-	"mariosdk/sdk/sdkmodel"
 )
 
 type ApiClient struct {

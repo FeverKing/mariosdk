@@ -1,8 +1,8 @@
 package mariosdk
 
 import (
-	"mariosdk/sdk/sdkclient"
-	"mariosdk/sdk/sdkreq"
+	"github.com/FeverKing/mariosdk/sdk/sdkclient"
+	"github.com/FeverKing/mariosdk/sdk/sdkreq"
 	"testing"
 )
 

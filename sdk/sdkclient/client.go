@@ -1,7 +1,7 @@
 package sdkclient
 
 import (
-	"mariosdk/sdk/sdkreq"
+	"github.com/FeverKing/mariosdk/sdk/sdkreq"
 )
 
 type Client interface {
