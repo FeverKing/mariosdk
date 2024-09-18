@@ -1,4 +1,4 @@
-module mariosdk
+module github.com/FeverKing/mariosdk
 
 go 1.22
 
