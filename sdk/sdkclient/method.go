@@ -76,3 +76,12 @@ func (c *DefaultClient) StopChallengeContainer(req *sdkreq.StopChallengeContaine
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) CheckTmpLoginVerifyToken(req *sdkreq.CheckTmpLoginVerifyTokenReq) (*sdkmodel.CheckTmpLoginVerifyTokenModel, error) {
+	res, err := c.apiClient.CallCheckTmpLoginVerifyTokenApi(req)
+	if err != nil {
+		sdklog.Errorf("check tmp login verify token failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
