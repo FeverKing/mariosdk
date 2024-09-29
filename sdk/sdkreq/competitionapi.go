@@ -36,6 +36,12 @@ type StopChallengeContainerReq struct {
 	ContainerId   string `json:"containerId"`
 }
 
+type CheckTmpLoginVerifyTokenReq struct {
+	AuthType      int    `json:"authType"`
+	Token         string `json:"token"`
+	CompetitionId string `json:"competitionId,omitempty"`
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -90,4 +96,18 @@ func (ac *ApiClient) CallStopChallengeContainerApi(request interface{}) (*sdkmod
 	}
 	sdklog.Infof("got stop challenge container resp: %v", stopChallengeContainerResp)
 	return &stopChallengeContainerResp, nil
+}
+
+func (ac *ApiClient) CallCheckTmpLoginVerifyTokenApi(request interface{}) (*sdkmodel.CheckTmpLoginVerifyTokenModel, error) {
+	res, err := ac.CallApi("/user/checkTmpLoginVerifyToken", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+	var checkTmpLoginVerifyTokenResp sdkmodel.CheckTmpLoginVerifyTokenModel
+	err = json.Unmarshal(ConvertInterfaceToJson(res), &checkTmpLoginVerifyTokenResp)
+	if err != nil {
+		return nil, err
+	}
+	sdklog.Infof("got check tmp login verify token resp: %v", checkTmpLoginVerifyTokenResp)
+	return &checkTmpLoginVerifyTokenResp, nil
 }

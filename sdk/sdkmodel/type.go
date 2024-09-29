@@ -65,3 +65,8 @@ type StopChallengeContainerModel struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
 }
+
+type CheckTmpLoginVerifyTokenModel struct {
+	UserId                string `json:"userId"`
+	CompetitionPermission int    `json:"competitionPermission,omitempty"`
+}
