@@ -45,8 +45,6 @@ type SearchPublicProblemModel struct {
 type GetUserInfoForCompetitionModel struct {
 	UserId     string `json:"userId"`
 	Username   string `json:"username"`
-	Password   string `json:"password"`
-	Email      string `json:"email"`
 	UserAvatar string `json:"userAvatar"`
 	Motto      string `json:"motto"`
 }
