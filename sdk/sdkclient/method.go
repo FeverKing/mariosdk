@@ -85,3 +85,7 @@ func (c *DefaultClient) CheckTmpLoginVerifyToken(req *sdkreq.CheckTmpLoginVerify
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) GetAuthToken() (string, error) {
+	return c.apiClient.Token, nil
+}

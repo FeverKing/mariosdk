@@ -38,7 +38,7 @@ type StopChallengeContainerReq struct {
 
 type CheckTmpLoginVerifyTokenReq struct {
 	AuthType      int    `json:"authType"`
-	Token         string `json:"token"`
+	Token         string `json:"Token"`
 	CompetitionId string `json:"competitionId,omitempty"`
 }
 
@@ -108,6 +108,6 @@ func (ac *ApiClient) CallCheckTmpLoginVerifyTokenApi(request interface{}) (*sdkm
 	if err != nil {
 		return nil, err
 	}
-	sdklog.Infof("got check tmp login verify token resp: %v", checkTmpLoginVerifyTokenResp)
+	sdklog.Infof("got check tmp login verify Token resp: %v", checkTmpLoginVerifyTokenResp)
 	return &checkTmpLoginVerifyTokenResp, nil
 }
