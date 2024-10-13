@@ -21,7 +21,7 @@ func (ac *ApiClient) CallAuthApi(ar interface{}) error {
 	if err != nil {
 		return err
 	}
-	ac.token = authModel.Token
-	sdklog.Infof("authenticated with token %s", ac.token)
+	ac.Token = authModel.Token
+	sdklog.Infof("authenticated with Token %s", ac.Token)
 	return nil
 }

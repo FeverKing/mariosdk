@@ -11,7 +11,7 @@ import (
 type ApiClient struct {
 	requester Requester
 	baseUrl   string
-	token     string
+	Token     string
 }
 
 func NewApiClient(requester Requester, baseUrl string) *ApiClient {
@@ -37,8 +37,8 @@ func (ac *ApiClient) CallApi(path, method string, payload interface{}) (interfac
 	if err != nil {
 		return nil, err
 	}
-	if ac.token != "" {
-		req.Header.Set("Authorization", ac.token)
+	if ac.Token != "" {
+		req.Header.Set("Authorization", ac.Token)
 	}
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
