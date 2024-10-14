@@ -38,7 +38,7 @@ type StopChallengeContainerReq struct {
 
 type CheckTmpLoginVerifyTokenReq struct {
 	AuthType      int    `json:"authType"`
-	Token         string `json:"Token"`
+	Token         string `json:"token"`
 	CompetitionId string `json:"competitionId,omitempty"`
 }
 
