@@ -4,6 +4,7 @@ import (
 	"github.com/FeverKing/mariosdk/sdk/sdkclient"
 	"github.com/FeverKing/mariosdk/sdk/sdkreq"
 	"testing"
+	"time"
 )
 
 func TestDefaultClient_Auth(t *testing.T) {
@@ -69,4 +70,26 @@ func TestGetAuthToken(t *testing.T) {
 		t.Errorf("failed: %v", err)
 	}
 	t.Logf("result: %v", res)
+}
+
+func TestReAuth(t *testing.T) {
+	client := sdkclient.NewClient()
+	client.Config.SetAccessKey("")
+	client.Config.SetSecretKey("")
+	client.Config.AddEndpoint("")
+
+	err := client.Auth()
+	if err != nil {
+		t.Errorf("Auth() failed: %v", err)
+	}
+
+	for {
+		res, err := client.GetAuthToken()
+		if err != nil {
+			t.Errorf("failed: %v", err)
+		}
+		t.Logf("result: %v", res)
+
+		time.Sleep(30 * time.Second)
+	}
 }
