@@ -20,7 +20,7 @@ func (c *DefaultClient) Auth() error {
 		sdklog.Errorf("auth failed: %v", err)
 	}
 
-	c.apiClient.TokenExpiry = time.Now().Add(24 * time.Hour)
+	c.apiClient.TokenExpiry = time.Now().Add(12 * time.Hour)
 	//c.apiClient.TokenExpiry = time.Now().Add(1 * time.Minute)
 	return nil
 }
