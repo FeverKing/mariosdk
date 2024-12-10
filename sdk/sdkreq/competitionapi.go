@@ -56,20 +56,6 @@ func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdk
 	return &getUserInfoForCompetitionResp, nil
 }
 
-func (ac *ApiClient) CallCheckCompetitionPrivilegeApi(request interface{}) (*sdkmodel.CheckCompetitionPrivilegeModel, error) {
-	res, err := ac.CallApi("/competition/checkCompetitionPrivilege", "POST", request)
-	if err != nil {
-		return nil, err
-	}
-	var checkCompetitionPrivilegeResp sdkmodel.CheckCompetitionPrivilegeModel
-	err = json.Unmarshal(ConvertInterfaceToJson(res), &checkCompetitionPrivilegeResp)
-	if err != nil {
-		return nil, err
-	}
-	sdklog.Infof("got check competition privilege resp: %v", checkCompetitionPrivilegeResp)
-	return &checkCompetitionPrivilegeResp, nil
-}
-
 func (ac *ApiClient) CallStartChallengeContainerApi(request interface{}) (*sdkmodel.StartChallengeContainerModel, error) {
 	res, err := ac.CallApi("/competition/startChallengeContainer", "POST", request)
 	if err != nil {
