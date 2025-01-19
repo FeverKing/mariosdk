@@ -70,3 +70,79 @@ func TestGetAuthToken(t *testing.T) {
 	}
 	t.Logf("result: %v", res)
 }
+
+func TestGetCompetitionSetting(t *testing.T) {
+	client := sdkclient.NewClient()
+	client.Config.SetAccessKey("")
+	client.Config.SetSecretKey("")
+	client.Config.AddEndpoint("")
+	err := client.Auth()
+	if err != nil {
+		t.Errorf("Auth() failed: %v", err)
+	}
+	req := &sdkreq.GetCompetitionSettingReq{
+		CompetitionId: "",
+	}
+	res, err := client.GetCompetitionSetting(req)
+	if err != nil {
+		t.Errorf("GetCompetitionSetting() failed: %v", err)
+	}
+	t.Logf("GetCompetitionSetting() result: %v", res)
+}
+
+func TestGetCompetitionAllIdentities(t *testing.T) {
+	client := sdkclient.NewClient()
+	client.Config.SetAccessKey("")
+	client.Config.SetSecretKey("")
+	client.Config.AddEndpoint("")
+	err := client.Auth()
+	if err != nil {
+		t.Errorf("Auth() failed: %v", err)
+	}
+	req := &sdkreq.GetCompetitionAllIdentitiesReq{
+		CompetitionId: "",
+	}
+	res, err := client.GetCompetitionAllIdentities(req)
+	if err != nil {
+		t.Errorf("GetCompetitionAllIdentities() failed: %v", err)
+	}
+	t.Logf("GetCompetitionAllIdentities() result: %v", res)
+}
+
+func TestGetCompetitionAllTeams(t *testing.T) {
+	client := sdkclient.NewClient()
+	client.Config.SetAccessKey("")
+	client.Config.SetSecretKey("")
+	client.Config.AddEndpoint("")
+	err := client.Auth()
+	if err != nil {
+		t.Errorf("Auth() failed: %v", err)
+	}
+	req := &sdkreq.GetCompetitionAllTeamsReq{
+		CompetitionId: "",
+	}
+	res, err := client.GetCompetitionAllTeams(req)
+	if err != nil {
+		t.Errorf("GetCompetitionAllTeams() failed: %v", err)
+	}
+	t.Logf("GetCompetitionAllTeams() result: %v", res)
+}
+
+func TestGetCompetitionAllUsers(t *testing.T) {
+	client := sdkclient.NewClient()
+	client.Config.SetAccessKey("")
+	client.Config.SetSecretKey("")
+	client.Config.AddEndpoint("")
+	err := client.Auth()
+	if err != nil {
+		t.Errorf("Auth() failed: %v", err)
+	}
+	req := &sdkreq.GetCompetitionAllUsersReq{
+		CompetitionId: "",
+	}
+	res, err := client.GetCompetitionAllUsers(req)
+	if err != nil {
+		t.Errorf("GetCompetitionAllUsers() failed: %v", err)
+	}
+	t.Logf("GetCompetitionAllUsers() result: %v", res)
+}

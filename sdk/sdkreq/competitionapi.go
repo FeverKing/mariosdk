@@ -42,6 +42,22 @@ type CheckTmpLoginVerifyTokenReq struct {
 	CompetitionId string `json:"competitionId,omitempty"`
 }
 
+type GetCompetitionSettingReq struct {
+	CompetitionId string `json:"competitionId"`
+}
+
+type GetCompetitionAllIdentitiesReq struct {
+	CompetitionId string `json:"competitionId"`
+}
+
+type GetCompetitionAllTeamsReq struct {
+	CompetitionId string `json:"competitionId"`
+}
+
+type GetCompetitionAllUsersReq struct {
+	CompetitionId string `json:"competitionId"`
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -96,4 +112,44 @@ func (ac *ApiClient) CallCheckTmpLoginVerifyTokenApi(request interface{}) (*sdkm
 	}
 	sdklog.Infof("got check tmp login verify Token resp: %v", checkTmpLoginVerifyTokenResp)
 	return &checkTmpLoginVerifyTokenResp, nil
+}
+
+func (ac *ApiClient) CallGetCompetitionSettingApi(request interface{}) ([]byte, error) {
+	res, err := ac.CallApi("/competition/getCompetitionSetting", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+
+	sdklog.Infof("got get competition setting resp")
+	return ConvertInterfaceToJson(res), nil
+}
+
+func (ac *ApiClient) CallGetCompetitionAllIdentitiesApi(request interface{}) ([]byte, error) {
+	res, err := ac.CallApi("/competition/getCompetitionAllIdentities", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+
+	sdklog.Infof("got get competition all identities resp")
+	return ConvertInterfaceToJson(res), nil
+}
+
+func (ac *ApiClient) CallGetCompetitionAllTeamsApi(request interface{}) ([]byte, error) {
+	res, err := ac.CallApi("/competition/getCompetitionAllTeams", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+
+	sdklog.Infof("got get competition all teams resp")
+	return ConvertInterfaceToJson(res), nil
+}
+
+func (ac *ApiClient) CallGetCompetitionAllUsersApi(request interface{}) ([]byte, error) {
+	res, err := ac.CallApi("/competition/getCompetitionAllUsers", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+
+	sdklog.Infof("got get competition all users resp")
+	return ConvertInterfaceToJson(res), nil
 }
