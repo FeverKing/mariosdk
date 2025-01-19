@@ -6,12 +6,14 @@ import (
 	"errors"
 	"github.com/FeverKing/mariosdk/sdk/sdkmodel"
 	"io"
+	"time"
 )
 
 type ApiClient struct {
-	requester Requester
-	baseUrl   string
-	Token     string
+	requester   Requester
+	baseUrl     string
+	Token       string
+	TokenExpiry time.Time
 }
 
 func NewApiClient(requester Requester, baseUrl string) *ApiClient {
