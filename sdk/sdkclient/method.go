@@ -74,19 +74,6 @@ func (c *DefaultClient) GetUserInfoForCompetition(req *sdkreq.GetUserInfoForComp
 	return res, nil
 }
 
-func (c *DefaultClient) CheckCompetitionPrivilege(req *sdkreq.CheckCompetitionPrivilegeReq) (*sdkmodel.CheckCompetitionPrivilegeModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallCheckCompetitionPrivilegeApi(req)
-	if err != nil {
-		sdklog.Errorf("check competition privilege failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
 func (c *DefaultClient) StartChallengeContainer(req *sdkreq.StartChallengeContainerReq) (*sdkmodel.StartChallengeContainerModel, error) {
 	if err := c.ensureAuth(); err != nil {
 		return nil, err
