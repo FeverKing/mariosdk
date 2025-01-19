@@ -133,3 +133,39 @@ func (c *DefaultClient) GetAuthToken() (string, error) {
 
 	return c.apiClient.Token, nil
 }
+
+func (c *DefaultClient) GetCompetitionSetting(req *sdkreq.GetCompetitionSettingReq) ([]byte, error) {
+	res, err := c.apiClient.CallGetCompetitionSettingApi(req)
+	if err != nil {
+		sdklog.Errorf("get competition setting failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetCompetitionAllIdentities(req *sdkreq.GetCompetitionAllIdentitiesReq) ([]byte, error) {
+	res, err := c.apiClient.CallGetCompetitionAllIdentitiesApi(req)
+	if err != nil {
+		sdklog.Errorf("get competition all identities failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetCompetitionAllTeams(req *sdkreq.GetCompetitionAllTeamsReq) ([]byte, error) {
+	res, err := c.apiClient.CallGetCompetitionAllTeamsApi(req)
+	if err != nil {
+		sdklog.Errorf("get competition all teams failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetCompetitionAllUsers(req *sdkreq.GetCompetitionAllUsersReq) ([]byte, error) {
+	res, err := c.apiClient.CallGetCompetitionAllUsersApi(req)
+	if err != nil {
+		sdklog.Errorf("get competition all users failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}

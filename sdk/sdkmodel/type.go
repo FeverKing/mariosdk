@@ -49,10 +49,6 @@ type GetUserInfoForCompetitionModel struct {
 	Motto      string `json:"motto"`
 }
 
-type CheckCompetitionPrivilegeModel struct {
-	Role int `json:"role"`
-}
-
 type StartChallengeContainerModel struct {
 	Address     []string `json:"address"`
 	ContainerId string   `json:"containerId"`
