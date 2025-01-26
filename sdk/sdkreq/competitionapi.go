@@ -7,9 +7,9 @@ import (
 )
 
 type GetUserInfoForCompetitionReq struct {
-	CompetitionId string `json:"competitionId"`
-	SecretKey     string `json:"secretKey"`
-	UserId        string `json:"userId"`
+	CompetitionId string   `json:"competitionId"`
+	SecretKey     string   `json:"secretKey"`
+	UserIds       []string `json:"userIds"`
 }
 
 type CheckCompetitionPrivilegeReq struct {
@@ -44,18 +44,22 @@ type CheckTmpLoginVerifyTokenReq struct {
 
 type GetCompetitionSettingReq struct {
 	CompetitionId string `json:"competitionId"`
+	SecretKey     string `json:"secretKey"`
 }
 
 type GetCompetitionAllIdentitiesReq struct {
 	CompetitionId string `json:"competitionId"`
+	SecretKey     string `json:"secretKey"`
 }
 
 type GetCompetitionAllTeamsReq struct {
 	CompetitionId string `json:"competitionId"`
+	SecretKey     string `json:"secretKey"`
 }
 
 type GetCompetitionAllUsersReq struct {
 	CompetitionId string `json:"competitionId"`
+	SecretKey     string `json:"secretKey"`
 }
 
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
