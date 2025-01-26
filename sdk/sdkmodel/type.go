@@ -43,10 +43,12 @@ type SearchPublicProblemModel struct {
 }
 
 type GetUserInfoForCompetitionModel struct {
-	UserId     string `json:"userId"`
-	Username   string `json:"username"`
-	UserAvatar string `json:"userAvatar"`
-	Motto      string `json:"motto"`
+	Users []struct {
+		UserId     string `json:"userId"`
+		Username   string `json:"username"`
+		UserAvatar string `json:"userAvatar"`
+		Motto      string `json:"motto"`
+	} `json:"users"`
 }
 
 type StartChallengeContainerModel struct {
