@@ -46,7 +46,7 @@ func TestDefaultClient_GetUserInfoForCompetition(t *testing.T) {
 	req := &sdkreq.GetUserInfoForCompetitionReq{
 		CompetitionId: "",
 		SecretKey:     "",
-		UserId:        "",
+		UserIds:       []string{""},
 	}
 	res, err := client.GetUserInfoForCompetition(req)
 	if err != nil {
