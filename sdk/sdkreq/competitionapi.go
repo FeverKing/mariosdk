@@ -62,6 +62,10 @@ type GetCompetitionAllUsersReq struct {
 	SecretKey     string `json:"secretKey"`
 }
 
+type GetCompetitionTemplateReq struct {
+	TemplateId string `json:"templateId"`
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -155,5 +159,15 @@ func (ac *ApiClient) CallGetCompetitionAllUsersApi(request interface{}) ([]byte,
 	}
 
 	sdklog.Infof("got get competition all users resp")
+	return ConvertInterfaceToJson(res), nil
+}
+
+func (ac *ApiClient) CallGetCompetitionTemplateApi(request interface{}) ([]byte, error) {
+	res, err := ac.CallApi("/competition/getCompetitionTemplate", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+
+	sdklog.Infof("got get competition template resp")
 	return ConvertInterfaceToJson(res), nil
 }

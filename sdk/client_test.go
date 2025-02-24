@@ -169,3 +169,22 @@ func TestGetCompetitionAllUsers(t *testing.T) {
 	}
 	t.Logf("GetCompetitionAllUsers() result: %v", res)
 }
+
+func TestGetCompetitionTemplate(t *testing.T) {
+	client := sdkclient.NewClient()
+	client.Config.SetAccessKey("")
+	client.Config.SetSecretKey("")
+	client.Config.AddEndpoint("")
+	err := client.Auth()
+	if err != nil {
+		t.Errorf("Auth() failed: %v", err)
+	}
+	req := &sdkreq.GetCompetitionTemplateReq{
+		TemplateId: "",
+	}
+	res, err := client.GetCompetitionTemplate(req)
+	if err != nil {
+		t.Errorf("GetCompetitionTemplate() failed: %v", err)
+	}
+	t.Logf("GetCompetitionTemplate() result: %v", res)
+}

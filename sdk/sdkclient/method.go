@@ -156,3 +156,12 @@ func (c *DefaultClient) GetCompetitionAllUsers(req *sdkreq.GetCompetitionAllUser
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) GetCompetitionTemplate(req *sdkreq.GetCompetitionTemplateReq) ([]byte, error) {
+	res, err := c.apiClient.CallGetCompetitionTemplateApi(req)
+	if err != nil {
+		sdklog.Errorf("get competition template failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
