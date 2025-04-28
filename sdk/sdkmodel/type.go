@@ -66,3 +66,7 @@ type CheckTmpLoginVerifyTokenModel struct {
 	UserId                string `json:"userId"`
 	CompetitionPermission int    `json:"competitionPermission,omitempty"`
 }
+
+type CheckCompetitionAWDPModel struct {
+	IsCorrect bool `json:"isCorrect"`
+}

@@ -66,6 +66,13 @@ type GetCompetitionTemplateReq struct {
 	TemplateId string `json:"templateId"`
 }
 
+type CheckCompetitionAWDPReq struct {
+	ContainerId   string `json:"containerId"`
+	CheckFileUrl  string `json:"checkFileUrl"`
+	CompetitionId string `json:"competitionId"`
+	SecretKey     string `json:"secretKey"`
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -170,4 +177,18 @@ func (ac *ApiClient) CallGetCompetitionTemplateApi(request interface{}) ([]byte,
 
 	sdklog.Infof("got get competition template resp")
 	return ConvertInterfaceToJson(res), nil
+}
+
+func (ac *ApiClient) CallCheckCompetitionAWDPApi(request interface{}) (*sdkmodel.CheckCompetitionAWDPModel, error) {
+	res, err := ac.CallApi("/competition/checkAWDP", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+	var checkCompetitionAWDPResp sdkmodel.CheckCompetitionAWDPModel
+	err = json.Unmarshal(ConvertInterfaceToJson(res), &checkCompetitionAWDPResp)
+	if err != nil {
+		return nil, err
+	}
+	sdklog.Infof("got check competition AWDP resp: %v", checkCompetitionAWDPResp)
+	return &checkCompetitionAWDPResp, nil
 }
