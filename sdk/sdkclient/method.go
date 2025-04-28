@@ -165,3 +165,12 @@ func (c *DefaultClient) GetCompetitionTemplate(req *sdkreq.GetCompetitionTemplat
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) CheckCompetitionAWDP(req *sdkreq.CheckCompetitionAWDPReq) (*sdkmodel.CheckCompetitionAWDPModel, error) {
+	res, err := c.apiClient.CallCheckCompetitionAWDPApi(req)
+	if err != nil {
+		sdklog.Errorf("check competition awdp failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
