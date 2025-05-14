@@ -174,3 +174,12 @@ func (c *DefaultClient) CheckCompetitionAWDP(req *sdkreq.CheckCompetitionAWDPReq
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) AwdpPatchApi(req *sdkreq.AwdpPatchApplyReq) (*sdkmodel.AwdpPatchApplyModel, error) {
+	res, err := c.apiClient.CallAwdpPatchApi(req)
+	if err != nil {
+		sdklog.Errorf("awdp patch failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}

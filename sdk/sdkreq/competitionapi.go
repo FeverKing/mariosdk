@@ -73,6 +73,16 @@ type CheckCompetitionAWDPReq struct {
 	SecretKey     string `json:"secretKey"`
 }
 
+type AwdpPatchApplyReq struct {
+	UserFileId    string `json:"userFileId"` //minio中存储的用戶上傳的tar文件id
+	ChallengeId   string `json:"challengeId"`
+	CompetitionId string `json:"competitionId"` // 比赛的唯一标识符，用于指定当前挑战所属的比赛
+	DockerImage   string `json:"dockerImage"`   // 容器使用的 Docker 镜像名称
+	UserId        string `json:"userId"`        // 用户的唯一标识符
+	CheckCommand  string `json:"checkCommand"`  // 检查命令
+	CheckFileId   string `json:"checkFileId"`   // 检查文件的URL,應該是指向minio的url吧
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -191,4 +201,18 @@ func (ac *ApiClient) CallCheckCompetitionAWDPApi(request interface{}) (*sdkmodel
 	}
 	sdklog.Infof("got check competition AWDP resp: %v", checkCompetitionAWDPResp)
 	return &checkCompetitionAWDPResp, nil
+}
+
+func (ac *ApiClient) CallAwdpPatchApi(request interface{}) (*sdkmodel.AwdpPatchApplyModel, error) {
+	res, err := ac.CallApi("/competition/awdpPatchApply", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+	var awdpPatchApplyResp sdkmodel.AwdpPatchApplyModel
+	err = json.Unmarshal(ConvertInterfaceToJson(res), &awdpPatchApplyResp)
+	if err != nil {
+		return nil, err
+	}
+	sdklog.Infof("got awdp patch apply resp: %v", awdpPatchApplyResp)
+	return &awdpPatchApplyResp, nil
 }
