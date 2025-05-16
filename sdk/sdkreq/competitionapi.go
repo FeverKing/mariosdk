@@ -74,13 +74,13 @@ type CheckCompetitionAWDPReq struct {
 }
 
 type AwdpPatchApplyReq struct {
-	UserFileId    string `json:"userFileId"` //minio中存储的用戶上傳的tar文件id
+	UserFilePath  string `json:"userFilePath"` //minio中存储的用戶上傳的tar文件路径
 	ChallengeId   string `json:"challengeId"`
 	CompetitionId string `json:"competitionId"` // 比赛的唯一标识符，用于指定当前挑战所属的比赛
 	DockerImage   string `json:"dockerImage"`   // 容器使用的 Docker 镜像名称
 	UserId        string `json:"userId"`        // 用户的唯一标识符
 	CheckCommand  string `json:"checkCommand"`  // 检查命令
-	CheckFileId   string `json:"checkFileId"`   // 检查文件的URL,應該是指向minio的url吧
+	CheckFilePath string `json:"checkFilePath"` // 检查文件的URL,應該是指向minio的url吧
 }
 
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
