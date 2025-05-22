@@ -18,6 +18,7 @@ func (c *DefaultClient) Auth() error {
 	err := c.apiClient.CallAuthApi(&ar)
 	if err != nil {
 		sdklog.Errorf("auth failed: %v", err)
+		return err
 	}
 
 	c.apiClient.TokenExpiry = time.Now().Add(12 * time.Hour)

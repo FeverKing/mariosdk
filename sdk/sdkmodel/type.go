@@ -72,6 +72,7 @@ type CheckCompetitionAWDPModel struct {
 }
 
 type AwdpPatchApplyModel struct {
-	PatchId int  `json:"patchId"`
-	Status  bool `json:"status"`
+	PatchId int    `json:"patchId"`
+	Status  bool   `json:"status"`
+	Message string `json:"message"`
 }
