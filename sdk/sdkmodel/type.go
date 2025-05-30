@@ -70,3 +70,9 @@ type CheckTmpLoginVerifyTokenModel struct {
 type CheckCompetitionAWDPModel struct {
 	IsCorrect bool `json:"isCorrect"`
 }
+
+type AwdpPatchApplyModel struct {
+	PatchId int    `json:"patchId"`
+	Status  bool   `json:"status"`
+	Message string `json:"message"`
+}

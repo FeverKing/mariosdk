@@ -18,6 +18,7 @@ func (c *DefaultClient) Auth() error {
 	err := c.apiClient.CallAuthApi(&ar)
 	if err != nil {
 		sdklog.Errorf("auth failed: %v", err)
+		return err
 	}
 
 	c.apiClient.TokenExpiry = time.Now().Add(12 * time.Hour)
@@ -170,6 +171,15 @@ func (c *DefaultClient) CheckCompetitionAWDP(req *sdkreq.CheckCompetitionAWDPReq
 	res, err := c.apiClient.CallCheckCompetitionAWDPApi(req)
 	if err != nil {
 		sdklog.Errorf("check competition awdp failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) AwdpPatchApi(req *sdkreq.AwdpPatchApplyReq) (*sdkmodel.AwdpPatchApplyModel, error) {
+	res, err := c.apiClient.CallAwdpPatchApi(req)
+	if err != nil {
+		sdklog.Errorf("awdp patch failed: %v", err)
 		return nil, err
 	}
 	return res, nil
