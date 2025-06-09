@@ -83,6 +83,32 @@ type AwdpPatchApplyReq struct {
 	CheckFilePath string `json:"checkFilePath"` // 检查文件的URL,應該是指向minio的url吧
 }
 
+type UploadCompetitionScoreRequestUserCell struct {
+	UserId          string `json:"userId"`          // 用户的唯一标识符
+	TotalScore      int64  `json:"totalScore"`      // 用户的总分数
+	TotalSolved     int64  `json:"totalSolved"`     // 用户的总解题数
+	TotalFirstBlood int64  `json:"totalFirstBlood"` // 用户的总首解数
+	LastSolvedTime  uint64 `json:"lastSolvedTime"`  // 最后解题时间
+	DetailStats     string `json:"detailStats"`     // 用户的详细统计信息
+}
+
+type UploadCompetitionScoreRequestTeamCell struct {
+	TeamId          string                                  `json:"teamId"`          // 队伍的唯一标识符
+	TotalScore      int64                                   `json:"totalScore"`      // 队伍的总分数
+	TotalSolved     int64                                   `json:"totalSolved"`     // 队伍的总解题数
+	TotalFirstBlood int64                                   `json:"totalFirstBlood"` // 队伍的总首解数
+	LastSolvedTime  uint64                                  `json:"lastSolvedTime"`  // 最后解题时间
+	IsBanned        bool                                    `json:"isBanned"`        // 队伍是否被封禁
+	IsAk            bool                                    `json:"isAk"`            // 队伍是否为ak
+	Userstats       []UploadCompetitionScoreRequestUserCell `json:"userStats"`       // 队伍成员的统计信息
+}
+
+type UploadCompetitionScoreRequest struct {
+	CompetitionId    string                                  `json:"competitionId"`    // 比赛的唯一标识符
+	SecretKey        string                                  `json:"secretKey"`        // 验证身份的密钥
+	CompetitionScore []UploadCompetitionScoreRequestTeamCell `json:"competitionScore"` // 比赛的得分信息
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -215,4 +241,18 @@ func (ac *ApiClient) CallAwdpPatchApi(request interface{}) (*sdkmodel.AwdpPatchA
 	}
 	sdklog.Infof("got awdp patch apply resp: %v", awdpPatchApplyResp)
 	return &awdpPatchApplyResp, nil
+}
+
+func (ac *ApiClient) CallUploadCompetitionScoreApi(request interface{}) (*sdkmodel.UploadCompetitionScoreModel, error) {
+	res, err := ac.CallApi("/competition/uploadCompetitionScore", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+	var uploadCompetitionScoreResp sdkmodel.UploadCompetitionScoreModel
+	err = json.Unmarshal(ConvertInterfaceToJson(res), &uploadCompetitionScoreResp)
+	if err != nil {
+		return nil, err
+	}
+	sdklog.Infof("got upload competition score resp: %v", uploadCompetitionScoreResp)
+	return &uploadCompetitionScoreResp, nil
 }
