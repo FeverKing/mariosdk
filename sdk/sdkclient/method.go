@@ -184,3 +184,12 @@ func (c *DefaultClient) AwdpPatchApi(req *sdkreq.AwdpPatchApplyReq) (*sdkmodel.A
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) UploadCompetitionScore(req *sdkreq.UploadCompetitionScoreRequest) (*sdkmodel.UploadCompetitionScoreModel, error) {
+	res, err := c.apiClient.CallUploadCompetitionScoreApi(req)
+	if err != nil {
+		sdklog.Errorf("upload competition score failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}

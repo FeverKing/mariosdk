@@ -76,3 +76,8 @@ type AwdpPatchApplyModel struct {
 	Status  bool   `json:"status"`
 	Message string `json:"message"`
 }
+
+type UploadCompetitionScoreModel struct {
+	Success bool   `json:"success"` // 请求是否成功
+	Message string `json:"message"` // 返回的提示信息
+}
