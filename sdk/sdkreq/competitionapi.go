@@ -227,7 +227,7 @@ func (ac *ApiClient) CallCheckCompetitionAWDPApi(request interface{}) (*sdkmodel
 }
 
 func (ac *ApiClient) CallAwdpPatchApi(request interface{}) (*sdkmodel.AwdpPatchApplyModel, error) {
-	res, err := ac.CallApi("/competition/awdpPatchApply", "POST", request)
+	res, err := ac.CallApi("/challenge/awdpPatchApply", "POST", request)
 	if err != nil {
 		return nil, err
 	}
