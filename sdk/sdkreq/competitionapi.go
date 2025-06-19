@@ -74,11 +74,13 @@ type CheckCompetitionAWDPReq struct {
 }
 
 type AwdpPatchApplyReq struct {
+	UserId        string `json:"userId"`        // 用户ID
 	UserFilePath  string `json:"userFilePath"`  //minio中存储的用戶上傳的tar文件路径
 	CheckCommand  string `json:"checkCommand"`  // 检查命令
 	CheckFilePath string `json:"checkFilePath"` // 检查文件的URL,應該是指向minio的url吧
 	ChallengeId   string `json:"challengeId"`   // 题目ID
 	DockerImage   string `json:"dockerImage"`   // 镜像名称
+	Env           string `json:"env"`           // 环境变量,
 }
 
 type UploadCompetitionScoreRequestUserCell struct {
