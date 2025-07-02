@@ -109,6 +109,12 @@ type UploadCompetitionScoreRequest struct {
 	CompetitionScore []UploadCompetitionScoreRequestTeamCell `json:"competitionScore"` // 比赛的得分信息
 }
 
+type GetTeamInfoForCompetitionRequest struct {
+	CompetitionId string   `json:"competitionId"` // 比赛的唯一标识符
+	SecretKey     string   `json:"secretKey"`     // 验证身份的密钥
+	TeamIds       []string `json:"teamIds"`       // 用户的唯一标识符
+}
+
 func (ac *ApiClient) CallGetUserInfoForCompetitionApi(request interface{}) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	res, err := ac.CallApi("/competition/getUserInfoForCompetition", "POST", request)
 	if err != nil {
@@ -255,4 +261,17 @@ func (ac *ApiClient) CallUploadCompetitionScoreApi(request interface{}) (*sdkmod
 	}
 	sdklog.Infof("got upload competition score resp: %v", uploadCompetitionScoreResp)
 	return &uploadCompetitionScoreResp, nil
+}
+func (ac *ApiClient) CallGetTeamInfoForCompetitionApi(request interface{}) (*sdkmodel.GetTeamInfoForCompetitionModel, error) {
+	res, err := ac.CallApi("/competition/getTeamInfoForCompetition", "POST", request)
+	if err != nil {
+		return nil, err
+	}
+	var getTeamInfoForCompetitionResp sdkmodel.GetTeamInfoForCompetitionModel
+	err = json.Unmarshal(ConvertInterfaceToJson(res), &getTeamInfoForCompetitionResp)
+	if err != nil {
+		return nil, err
+	}
+	sdklog.Infof("got get user info for competition resp: %v", getTeamInfoForCompetitionResp)
+	return &getTeamInfoForCompetitionResp, nil
 }
