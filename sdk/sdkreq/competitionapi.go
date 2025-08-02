@@ -79,7 +79,7 @@ type AwdpPatchApplyReq struct {
 	CheckCommand  string `json:"checkCommand"`  // 检查命令
 	CheckFilePath string `json:"checkFilePath"` // 检查文件的URL,應該是指向minio的url吧
 	Port          int64  `json:"port"`          // 目标题目的端口
-	Type          string `json:"type"`          //目标题目的类型，根据是tcp端口还是http端口来决定的
+	Type          int64  `json:"type"`          //目标题目的类型，根据是tcp端口还是http端口来决定的
 	ChallengeId   string `json:"challengeId"`   // 题目ID
 	DockerImage   string `json:"dockerImage"`   // 镜像名称
 	Env           string `json:"env"`           // 环境变量,
