@@ -44,10 +44,12 @@ type SearchPublicProblemModel struct {
 
 type GetUserInfoForCompetitionModel struct {
 	Users []struct {
-		UserId     string `json:"userId"`
-		Username   string `json:"username"`
-		UserAvatar string `json:"userAvatar"`
-		Motto      string `json:"motto"`
+		UserId     string     `json:"userId"`
+		Username   string     `json:"username"`
+		UserAvatar string     `json:"userAvatar"`
+		Motto      string     `json:"motto"`
+		TeamId     string     `json:"teamId"`
+		Identities []Identity `json:"identities"`
 	} `json:"users"`
 }
 
@@ -80,4 +82,29 @@ type AwdpPatchApplyModel struct {
 type UploadCompetitionScoreModel struct {
 	Success bool   `json:"success"` // 请求是否成功
 	Message string `json:"message"` // 返回的提示信息
+}
+
+type GetTeamInfoForCompetitionModel struct {
+	Teams []struct {
+		TeamId     string            `json:"teamId"`
+		TeamName   string            `json:"teamName"`
+		TeamMotto  string            `json:"teamMotto"`
+		TeamToken  string            `json:"teamToken"`
+		TeamAvatar string            `json:"teamAvatar"`
+		Captain    CompetitionUser   `json:"captain"`
+		Members    []CompetitionUser `json:"members"`
+		Identities []Identity        `json:"identities"`
+	} `json:"teams"`
+}
+type Identity struct {
+	IdentityId     string `json:"identityId,optional"`
+	IdentityValue  string `json:"identityValue"`
+	IdentityName   string `json:"identityName,optional"`
+	IdentityBaseId string `json:"identityBaseId"`
+}
+type CompetitionUser struct {
+	UserId     string     `json:"userId"`
+	TeamId     string     `json:"teamId"`
+	IsHaveTeam bool       `json:"isHaveTeam"`
+	Identities []Identity `json:"identities"`
 }

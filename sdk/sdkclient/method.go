@@ -193,3 +193,16 @@ func (c *DefaultClient) UploadCompetitionScore(req *sdkreq.UploadCompetitionScor
 	}
 	return res, nil
 }
+
+func (c *DefaultClient) GetTeamInfoForCompetition(req *sdkreq.GetTeamInfoForCompetitionRequest) (*sdkmodel.GetTeamInfoForCompetitionModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetTeamInfoForCompetitionApi(req)
+	if err != nil {
+		sdklog.Errorf("get user info for competition failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
