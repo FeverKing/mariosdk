@@ -206,3 +206,33 @@ func (c *DefaultClient) GetTeamInfoForCompetition(req *sdkreq.GetTeamInfoForComp
 	}
 	return res, nil
 }
+
+// ============== 题库授权相关方法 ==============
+
+// GetAuthorizedProblemBanks 获取已授权的题库列表
+func (c *DefaultClient) GetAuthorizedProblemBanks(req *sdkreq.GetAuthorizedProblemBanksReq) (*sdkmodel.GetAuthorizedProblemBanksModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetAuthorizedProblemBanksApi(req)
+	if err != nil {
+		sdklog.Errorf("get authorized problem banks failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+// GetProblemBankForCompetition 获取题库详情(包含题目)
+func (c *DefaultClient) GetProblemBankForCompetition(req *sdkreq.GetProblemBankForCompetitionReq) (*sdkmodel.GetProblemBankForCompetitionModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetProblemBankForCompetitionApi(req)
+	if err != nil {
+		sdklog.Errorf("get problem bank for competition failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
