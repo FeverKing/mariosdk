@@ -132,6 +132,7 @@ type GetAuthorizedProblemBanksModel struct {
 type ExportedProblemTag struct {
 	Id   uint64 `json:"id"`
 	Name string `json:"name"`
+	Type int64  `json:"type"`
 }
 
 // ExportedProblemAttachment 导出的题目附件
