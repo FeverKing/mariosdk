@@ -1,6 +1,7 @@
 package sdkclient
 
 import (
+	"errors"
 	"github.com/FeverKing/mariosdk/sdk/sdklog"
 	"github.com/FeverKing/mariosdk/sdk/sdkmodel"
 	"github.com/FeverKing/mariosdk/sdk/sdkreq"
@@ -8,6 +9,9 @@ import (
 )
 
 func (c *DefaultClient) Auth() error {
+	if len(c.Config.Endpoints) == 0 {
+		return errors.New("no sdk endpoint configured")
+	}
 	c.apiClient = sdkreq.NewApiClient(sdkreq.NewHttpRequester(), c.Config.Endpoints[0])
 	// authenticate
 	sdklog.Infof("authenticating with %s", c.Config.AccessKey)
@@ -27,10 +31,24 @@ func (c *DefaultClient) Auth() error {
 }
 
 func (c *DefaultClient) ensureAuth() error {
+	if c.apiClient == nil {
+		return c.Auth()
+	}
 	if time.Now().After(c.apiClient.TokenExpiry) {
 		sdklog.Infof("Token expired. Re-authenticating.")
 		return c.Auth()
 	}
+	return nil
+}
+
+func (c *DefaultClient) ensureAPIClient() error {
+	if c.apiClient != nil {
+		return nil
+	}
+	if len(c.Config.Endpoints) == 0 {
+		return errors.New("no sdk endpoint configured")
+	}
+	c.apiClient = sdkreq.NewApiClient(sdkreq.NewHttpRequester(), c.Config.Endpoints[0])
 	return nil
 }
 
@@ -88,6 +106,97 @@ func (c *DefaultClient) StartChallengeContainer(req *sdkreq.StartChallengeContai
 	return res, nil
 }
 
+func (c *DefaultClient) GetAwdpBundleDetail(req *sdkreq.GetAwdpBundleDetailReq) (*sdkmodel.GetAwdpBundleDetailModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetAwdpBundleDetailApi(req)
+	if err != nil {
+		sdklog.Errorf("get awdp bundle detail failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetAwdpProblemRank(req *sdkreq.GetAwdpProblemRankReq) (*sdkmodel.GetAwdpProblemRankModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetAwdpProblemRankApi(req)
+	if err != nil {
+		sdklog.Errorf("get awdp problem rank failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetUserCompetitionRecord(req *sdkreq.GetUserCompetitionRecordReq) (*sdkmodel.GetUserCompetitionRecordModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetUserCompetitionRecordApi(req)
+	if err != nil {
+		sdklog.Errorf("get user competition record failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetMyCompetitionAnalysis(req *sdkreq.GetMyCompetitionAnalysisReq) (*sdkmodel.GetMyCompetitionAnalysisModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetMyCompetitionAnalysisApi(req)
+	if err != nil {
+		sdklog.Errorf("get my competition analysis failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetPremiumCompetitionAnalysis(req *sdkreq.GetPremiumCompetitionAnalysisReq) (*sdkmodel.GetPremiumCompetitionAnalysisModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetPremiumCompetitionAnalysisApi(req)
+	if err != nil {
+		sdklog.Errorf("get premium competition analysis failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetMyProblemAnalysis(req *sdkreq.GetMyProblemAnalysisReq) (*sdkmodel.GetMyProblemAnalysisModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetMyProblemAnalysisApi(req)
+	if err != nil {
+		sdklog.Errorf("get my problem analysis failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) GetPremiumProblemAnalysis(req *sdkreq.GetPremiumProblemAnalysisReq) (*sdkmodel.GetPremiumProblemAnalysisModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallGetPremiumProblemAnalysisApi(req)
+	if err != nil {
+		sdklog.Errorf("get premium problem analysis failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
 func (c *DefaultClient) StopChallengeContainer(req *sdkreq.StopChallengeContainerReq) (*sdkmodel.StopChallengeContainerModel, error) {
 	if err := c.ensureAuth(); err != nil {
 		return nil, err
@@ -123,6 +232,10 @@ func (c *DefaultClient) GetAuthToken() (string, error) {
 }
 
 func (c *DefaultClient) GetCompetitionSetting(req *sdkreq.GetCompetitionSettingReq) ([]byte, error) {
+	if err := c.ensureAPIClient(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallGetCompetitionSettingApi(req)
 	if err != nil {
 		sdklog.Errorf("get competition setting failed: %v", err)
@@ -132,6 +245,10 @@ func (c *DefaultClient) GetCompetitionSetting(req *sdkreq.GetCompetitionSettingR
 }
 
 func (c *DefaultClient) GetCompetitionAllIdentities(req *sdkreq.GetCompetitionAllIdentitiesReq) ([]byte, error) {
+	if err := c.ensureAPIClient(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallGetCompetitionAllIdentitiesApi(req)
 	if err != nil {
 		sdklog.Errorf("get competition all identities failed: %v", err)
@@ -141,6 +258,10 @@ func (c *DefaultClient) GetCompetitionAllIdentities(req *sdkreq.GetCompetitionAl
 }
 
 func (c *DefaultClient) GetCompetitionAllTeams(req *sdkreq.GetCompetitionAllTeamsReq) ([]byte, error) {
+	if err := c.ensureAPIClient(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallGetCompetitionAllTeamsApi(req)
 	if err != nil {
 		sdklog.Errorf("get competition all teams failed: %v", err)
@@ -150,6 +271,10 @@ func (c *DefaultClient) GetCompetitionAllTeams(req *sdkreq.GetCompetitionAllTeam
 }
 
 func (c *DefaultClient) GetCompetitionAllUsers(req *sdkreq.GetCompetitionAllUsersReq) ([]byte, error) {
+	if err := c.ensureAPIClient(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallGetCompetitionAllUsersApi(req)
 	if err != nil {
 		sdklog.Errorf("get competition all users failed: %v", err)
@@ -159,6 +284,10 @@ func (c *DefaultClient) GetCompetitionAllUsers(req *sdkreq.GetCompetitionAllUser
 }
 
 func (c *DefaultClient) GetCompetitionTemplate(req *sdkreq.GetCompetitionTemplateReq) ([]byte, error) {
+	if err := c.ensureAPIClient(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallGetCompetitionTemplateApi(req)
 	if err != nil {
 		sdklog.Errorf("get competition template failed: %v", err)
@@ -168,6 +297,10 @@ func (c *DefaultClient) GetCompetitionTemplate(req *sdkreq.GetCompetitionTemplat
 }
 
 func (c *DefaultClient) CheckCompetitionAWDP(req *sdkreq.CheckCompetitionAWDPReq) (*sdkmodel.CheckCompetitionAWDPModel, error) {
+	if err := c.ensureAPIClient(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallCheckCompetitionAWDPApi(req)
 	if err != nil {
 		sdklog.Errorf("check competition awdp failed: %v", err)
@@ -177,6 +310,10 @@ func (c *DefaultClient) CheckCompetitionAWDP(req *sdkreq.CheckCompetitionAWDPReq
 }
 
 func (c *DefaultClient) AwdpPatchApi(req *sdkreq.AwdpPatchApplyReq) (*sdkmodel.AwdpPatchApplyModel, error) {
+	if err := c.ensureAPIClient(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallAwdpPatchApi(req)
 	if err != nil {
 		sdklog.Errorf("awdp patch failed: %v", err)
@@ -186,6 +323,10 @@ func (c *DefaultClient) AwdpPatchApi(req *sdkreq.AwdpPatchApplyReq) (*sdkmodel.A
 }
 
 func (c *DefaultClient) UploadCompetitionScore(req *sdkreq.UploadCompetitionScoreRequest) (*sdkmodel.UploadCompetitionScoreModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
 	res, err := c.apiClient.CallUploadCompetitionScoreApi(req)
 	if err != nil {
 		sdklog.Errorf("upload competition score failed: %v", err)
@@ -202,6 +343,19 @@ func (c *DefaultClient) GetTeamInfoForCompetition(req *sdkreq.GetTeamInfoForComp
 	res, err := c.apiClient.CallGetTeamInfoForCompetitionApi(req)
 	if err != nil {
 		sdklog.Errorf("get user info for competition failed: %v", err)
+		return nil, err
+	}
+	return res, nil
+}
+
+func (c *DefaultClient) PullCompetitionSnapshotForAdmin(req *sdkreq.PullCompetitionSnapshotForAdminRequest) (*sdkmodel.BoolRespModel, error) {
+	if err := c.ensureAuth(); err != nil {
+		return nil, err
+	}
+
+	res, err := c.apiClient.CallPullCompetitionSnapshotForAdminApi(req)
+	if err != nil {
+		sdklog.Errorf("pull competition snapshot for admin failed: %v", err)
 		return nil, err
 	}
 	return res, nil

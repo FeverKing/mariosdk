@@ -45,10 +45,18 @@ func (ac *ApiClient) CallApi(path, method string, payload interface{}) (interfac
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
-	ac.requester = NewHttpRequester()
+	if ac.requester == nil {
+		ac.requester = NewHttpRequester()
+	}
 	res, err := ac.requester.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if res == nil {
+		return nil, errors.New("nil response")
+	}
+	if res.Body == nil {
+		return nil, errors.New("nil response body")
 	}
 	defer res.Body.Close()
 	var responseBody []byte
@@ -60,6 +68,9 @@ func (ac *ApiClient) CallApi(path, method string, payload interface{}) (interfac
 	err = json.Unmarshal(responseBody, &baseResponse)
 	if err != nil {
 		return nil, err
+	}
+	if baseResponse == nil {
+		return nil, errors.New("nil base response")
 	}
 	if baseResponse.Code != 200 {
 		return nil, errors.New(baseResponse.Msg)

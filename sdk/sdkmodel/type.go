@@ -73,6 +73,136 @@ type CheckCompetitionAWDPModel struct {
 	IsCorrect bool `json:"isCorrect"`
 }
 
+type AwdpSpeedRankCell struct {
+	UserId    string `json:"userId"`
+	UserName  string `json:"userName"`
+	ProblemId string `json:"problemId"`
+	Duration  int64  `json:"duration"`
+	Rank      int64  `json:"rank"`
+}
+
+type GetAwdpBundleDetailModel struct {
+	BundleId     string   `json:"bundleId"`
+	BundleName   string   `json:"bundleName"`
+	ProblemIds   []string `json:"problemIds"`
+	ProblemCount int64    `json:"problemCount"`
+}
+
+type GetAwdpProblemRankModel struct {
+	AttackSpeedRank  []AwdpSpeedRankCell `json:"attackSpeedRank"`
+	DefenseSpeedRank []AwdpSpeedRankCell `json:"defenseSpeedRank"`
+}
+
+type TagSolveCount struct {
+	Tag   string `json:"tag"`
+	Count uint64 `json:"count"`
+}
+
+type CompetitionRecordModel struct {
+	Id                               string          `json:"id"`
+	Name                             string          `json:"name"`
+	ShortName                        string          `json:"shortName"`
+	Image                            string          `json:"image"`
+	StartTime                        uint64          `json:"startTime"`
+	EndTime                          uint64          `json:"endTime"`
+	Privilege                        int32           `json:"privilege"`
+	CompetitionType                  int32           `json:"competitionType"`
+	Status                           int32           `json:"status"`
+	PostCompetitionSnapshotPath      string          `json:"postCompetitionSnapshotPath"`
+	PostCompetitionSnapshotUpdatedAt uint64          `json:"postCompetitionSnapshotUpdatedAt"`
+	SnapshotSolvedCount              uint64          `json:"snapshotSolvedCount"`
+	SnapshotAverageSolveSeconds      uint64          `json:"snapshotAverageSolveSeconds"`
+	SnapshotBestSolveSeconds         uint64          `json:"snapshotBestSolveSeconds"`
+	SnapshotWorstSolveSeconds        uint64          `json:"snapshotWorstSolveSeconds"`
+	SnapshotTagSummary               []TagSolveCount `json:"snapshotTagSummary"`
+}
+
+type GetUserCompetitionRecordModel struct {
+	TotalCount     int64                    `json:"totalCount"`
+	InProcessCount int64                    `json:"inProcessCount"`
+	NotStartCount  int64                    `json:"notStartCount"`
+	EndedCount     int64                    `json:"endedCount"`
+	Competitions   []CompetitionRecordModel `json:"competitions"`
+}
+
+type GetMyCompetitionAnalysisModel struct {
+	TotalCompetitions         int64  `json:"totalCompetitions"`
+	NotStartCompetitions      int64  `json:"notStartCompetitions"`
+	InProcessCompetitions     int64  `json:"inProcessCompetitions"`
+	EndedCompetitions         int64  `json:"endedCompetitions"`
+	SnapshotReadyCount        int64  `json:"snapshotReadyCount"`
+	LastSnapshotUpdatedAt     uint64 `json:"lastSnapshotUpdatedAt"`
+	AverageSolveSeconds       uint64 `json:"averageSolveSeconds"`
+	BestSolveSeconds          uint64 `json:"bestSolveSeconds"`
+	WorstSolveSeconds         uint64 `json:"worstSolveSeconds"`
+	StrongestTag              string `json:"strongestTag"`
+	WeakestTag                string `json:"weakestTag"`
+	NextTrainingDirection     string `json:"nextTrainingDirection"`
+	RecommendedFirstDirection string `json:"recommendedFirstDirection"`
+	RecommendedSlowDirection  string `json:"recommendedSlowDirection"`
+	TrainingSuggestion        string `json:"trainingSuggestion"`
+	StrategyAdvice            string `json:"strategyAdvice"`
+}
+
+type PremiumCompetitionDirectionSummaryModel struct {
+	Tag         string `json:"tag"`
+	SolvedCount int    `json:"solvedCount"`
+}
+
+type ProblemRecordModel struct {
+	Tag   string `json:"tag"`
+	Count int    `json:"count"`
+}
+
+type ProblemSolveDurationCellModel struct {
+	ProblemId    string `json:"problemId"`
+	ProblemName  string `json:"problemName"`
+	SolveSeconds int64  `json:"solveSeconds"`
+}
+
+type GetMyProblemAnalysisModel struct {
+	DirectionProgress       []ProblemRecordModel          `json:"directionProgress"`
+	Rank                    int                           `json:"rank"`
+	TotalSolved             int                           `json:"totalSolved"`
+	AverageSolveSeconds     int64                         `json:"averageSolveSeconds"`
+	SolvedWithDurationCount int64                         `json:"solvedWithDurationCount"`
+	FastestProblem          ProblemSolveDurationCellModel `json:"fastestProblem"`
+	SlowestProblem          ProblemSolveDurationCellModel `json:"slowestProblem"`
+}
+
+type PremiumProblemDirectionSummaryModel struct {
+	Tag         string `json:"tag"`
+	SolvedCount int    `json:"solvedCount"`
+}
+
+type GetPremiumProblemAnalysisModel struct {
+	AccessScope               string                              `json:"accessScope"`
+	StrongestDirection        PremiumProblemDirectionSummaryModel `json:"strongestDirection"`
+	WeakestDirection          PremiumProblemDirectionSummaryModel `json:"weakestDirection"`
+	AverageSolveSeconds       int64                               `json:"averageSolveSeconds"`
+	FastestProblem            ProblemSolveDurationCellModel       `json:"fastestProblem"`
+	SlowestProblem            ProblemSolveDurationCellModel       `json:"slowestProblem"`
+	NextTrainingDirection     string                              `json:"nextTrainingDirection"`
+	RecommendedFirstDirection string                              `json:"recommendedFirstDirection"`
+	RecommendedSlowDirection  string                              `json:"recommendedSlowDirection"`
+	TrainingSuggestion        string                              `json:"trainingSuggestion"`
+	StrategyAdvice            string                              `json:"strategyAdvice"`
+}
+
+type GetPremiumCompetitionAnalysisModel struct {
+	AccessScope               string                                  `json:"accessScope"`
+	TotalCompetitions         int64                                   `json:"totalCompetitions"`
+	EndedCompetitions         int64                                   `json:"endedCompetitions"`
+	SnapshotReadyCount        int64                                   `json:"snapshotReadyCount"`
+	StrongestDirection        PremiumCompetitionDirectionSummaryModel `json:"strongestDirection"`
+	WeakestDirection          PremiumCompetitionDirectionSummaryModel `json:"weakestDirection"`
+	NextTrainingDirection     string                                  `json:"nextTrainingDirection"`
+	RecommendedFirstDirection string                                  `json:"recommendedFirstDirection"`
+	RecommendedSlowDirection  string                                  `json:"recommendedSlowDirection"`
+	TrainingSuggestion        string                                  `json:"trainingSuggestion"`
+	StrategyAdvice            string                                  `json:"strategyAdvice"`
+}
+
 type AwdpPatchApplyModel struct {
 	PatchId int    `json:"patchId"`
 	Status  bool   `json:"status"`
@@ -82,6 +212,11 @@ type AwdpPatchApplyModel struct {
 type UploadCompetitionScoreModel struct {
 	Success bool   `json:"success"` // 请求是否成功
 	Message string `json:"message"` // 返回的提示信息
+}
+
+type BoolRespModel struct {
+	Result  bool   `json:"result"`
+	Message string `json:"message,omitempty"`
 }
 
 type GetTeamInfoForCompetitionModel struct {
