@@ -67,19 +67,6 @@ func (c *DefaultClient) GetBatchUserInfo(ids []string) (*sdkmodel.BatchUserInfoM
 	return res, nil
 }
 
-func (c *DefaultClient) SearchPublicProblem(req *sdkreq.SearchPublicProblemReq) (*sdkmodel.SearchPublicProblemModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallSearchPublicProblemApi(req)
-	if err != nil {
-		sdklog.Errorf("search public problem failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
 func (c *DefaultClient) GetUserInfoForCompetition(req *sdkreq.GetUserInfoForCompetitionReq) (*sdkmodel.GetUserInfoForCompetitionModel, error) {
 	if err := c.ensureAuth(); err != nil {
 		return nil, err
@@ -106,92 +93,14 @@ func (c *DefaultClient) StartChallengeContainer(req *sdkreq.StartChallengeContai
 	return res, nil
 }
 
-func (c *DefaultClient) GetAwdpBundleDetail(req *sdkreq.GetAwdpBundleDetailReq) (*sdkmodel.GetAwdpBundleDetailModel, error) {
+func (c *DefaultClient) SubmitAwdpPatch(req *sdkreq.SubmitAwdpPatchReq) (*sdkmodel.SubmitAwdpPatchModel, error) {
 	if err := c.ensureAuth(); err != nil {
 		return nil, err
 	}
 
-	res, err := c.apiClient.CallGetAwdpBundleDetailApi(req)
+	res, err := c.apiClient.CallSubmitAwdpPatchApi(req)
 	if err != nil {
-		sdklog.Errorf("get awdp bundle detail failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *DefaultClient) GetAwdpProblemRank(req *sdkreq.GetAwdpProblemRankReq) (*sdkmodel.GetAwdpProblemRankModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallGetAwdpProblemRankApi(req)
-	if err != nil {
-		sdklog.Errorf("get awdp problem rank failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *DefaultClient) GetUserCompetitionRecord(req *sdkreq.GetUserCompetitionRecordReq) (*sdkmodel.GetUserCompetitionRecordModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallGetUserCompetitionRecordApi(req)
-	if err != nil {
-		sdklog.Errorf("get user competition record failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *DefaultClient) GetMyCompetitionAnalysis(req *sdkreq.GetMyCompetitionAnalysisReq) (*sdkmodel.GetMyCompetitionAnalysisModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallGetMyCompetitionAnalysisApi(req)
-	if err != nil {
-		sdklog.Errorf("get my competition analysis failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *DefaultClient) GetPremiumCompetitionAnalysis(req *sdkreq.GetPremiumCompetitionAnalysisReq) (*sdkmodel.GetPremiumCompetitionAnalysisModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallGetPremiumCompetitionAnalysisApi(req)
-	if err != nil {
-		sdklog.Errorf("get premium competition analysis failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *DefaultClient) GetMyProblemAnalysis(req *sdkreq.GetMyProblemAnalysisReq) (*sdkmodel.GetMyProblemAnalysisModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallGetMyProblemAnalysisApi(req)
-	if err != nil {
-		sdklog.Errorf("get my problem analysis failed: %v", err)
-		return nil, err
-	}
-	return res, nil
-}
-
-func (c *DefaultClient) GetPremiumProblemAnalysis(req *sdkreq.GetPremiumProblemAnalysisReq) (*sdkmodel.GetPremiumProblemAnalysisModel, error) {
-	if err := c.ensureAuth(); err != nil {
-		return nil, err
-	}
-
-	res, err := c.apiClient.CallGetPremiumProblemAnalysisApi(req)
-	if err != nil {
-		sdklog.Errorf("get premium problem analysis failed: %v", err)
+		sdklog.Errorf("submit awdp patch failed: %v", err)
 		return nil, err
 	}
 	return res, nil

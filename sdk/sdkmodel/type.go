@@ -22,26 +22,6 @@ type BatchUserInfoModel struct {
 	} `json:"users"`
 }
 
-type SearchPublicProblemModel struct {
-	Problems []struct {
-		Id          string      `json:"id"`
-		Name        string      `json:"name"`
-		CreateId    string      `json:"createId"`
-		OwnerId     string      `json:"ownerId"`
-		ProblemType int         `json:"problemType"`
-		Tags        interface{} `json:"tags"`
-		Attachments interface{} `json:"attachments"`
-		CreateName  string      `json:"createName"`
-		Permission  int         `json:"permission"`
-		Difficulty  int         `json:"difficulty"`
-		PublicId    string      `json:"publicId"`
-		PublicType  int         `json:"publicType"`
-		Desc        string      `json:"desc"`
-		IsSolved    bool        `json:"isSolved"`
-	} `json:"problems"`
-	Total int `json:"total"`
-}
-
 type GetUserInfoForCompetitionModel struct {
 	Users []struct {
 		UserId     string     `json:"userId"`
@@ -73,140 +53,24 @@ type CheckCompetitionAWDPModel struct {
 	IsCorrect bool `json:"isCorrect"`
 }
 
-type AwdpSpeedRankCell struct {
-	UserId    string `json:"userId"`
-	UserName  string `json:"userName"`
-	ProblemId string `json:"problemId"`
-	Duration  int64  `json:"duration"`
-	Rank      int64  `json:"rank"`
-}
-
-type GetAwdpBundleDetailModel struct {
-	BundleId     string   `json:"bundleId"`
-	BundleName   string   `json:"bundleName"`
-	ProblemIds   []string `json:"problemIds"`
-	ProblemCount int64    `json:"problemCount"`
-}
-
-type GetAwdpProblemRankModel struct {
-	AttackSpeedRank  []AwdpSpeedRankCell `json:"attackSpeedRank"`
-	DefenseSpeedRank []AwdpSpeedRankCell `json:"defenseSpeedRank"`
-}
-
-type TagSolveCount struct {
-	Tag   string `json:"tag"`
-	Count uint64 `json:"count"`
-}
-
-type CompetitionRecordModel struct {
-	Id                               string          `json:"id"`
-	Name                             string          `json:"name"`
-	ShortName                        string          `json:"shortName"`
-	Image                            string          `json:"image"`
-	StartTime                        uint64          `json:"startTime"`
-	EndTime                          uint64          `json:"endTime"`
-	Privilege                        int32           `json:"privilege"`
-	CompetitionType                  int32           `json:"competitionType"`
-	Status                           int32           `json:"status"`
-	PostCompetitionSnapshotPath      string          `json:"postCompetitionSnapshotPath"`
-	PostCompetitionSnapshotUpdatedAt uint64          `json:"postCompetitionSnapshotUpdatedAt"`
-	SnapshotSolvedCount              uint64          `json:"snapshotSolvedCount"`
-	SnapshotAverageSolveSeconds      uint64          `json:"snapshotAverageSolveSeconds"`
-	SnapshotBestSolveSeconds         uint64          `json:"snapshotBestSolveSeconds"`
-	SnapshotWorstSolveSeconds        uint64          `json:"snapshotWorstSolveSeconds"`
-	SnapshotTagSummary               []TagSolveCount `json:"snapshotTagSummary"`
-}
-
-type GetUserCompetitionRecordModel struct {
-	TotalCount     int64                    `json:"totalCount"`
-	InProcessCount int64                    `json:"inProcessCount"`
-	NotStartCount  int64                    `json:"notStartCount"`
-	EndedCount     int64                    `json:"endedCount"`
-	Competitions   []CompetitionRecordModel `json:"competitions"`
-}
-
-type GetMyCompetitionAnalysisModel struct {
-	TotalCompetitions         int64  `json:"totalCompetitions"`
-	NotStartCompetitions      int64  `json:"notStartCompetitions"`
-	InProcessCompetitions     int64  `json:"inProcessCompetitions"`
-	EndedCompetitions         int64  `json:"endedCompetitions"`
-	SnapshotReadyCount        int64  `json:"snapshotReadyCount"`
-	LastSnapshotUpdatedAt     uint64 `json:"lastSnapshotUpdatedAt"`
-	AverageSolveSeconds       uint64 `json:"averageSolveSeconds"`
-	BestSolveSeconds          uint64 `json:"bestSolveSeconds"`
-	WorstSolveSeconds         uint64 `json:"worstSolveSeconds"`
-	StrongestTag              string `json:"strongestTag"`
-	WeakestTag                string `json:"weakestTag"`
-	NextTrainingDirection     string `json:"nextTrainingDirection"`
-	RecommendedFirstDirection string `json:"recommendedFirstDirection"`
-	RecommendedSlowDirection  string `json:"recommendedSlowDirection"`
-	TrainingSuggestion        string `json:"trainingSuggestion"`
-	StrategyAdvice            string `json:"strategyAdvice"`
-}
-
-type PremiumCompetitionDirectionSummaryModel struct {
-	Tag         string `json:"tag"`
-	SolvedCount int    `json:"solvedCount"`
-}
-
-type ProblemRecordModel struct {
-	Tag   string `json:"tag"`
-	Count int    `json:"count"`
-}
-
-type ProblemSolveDurationCellModel struct {
-	ProblemId    string `json:"problemId"`
-	ProblemName  string `json:"problemName"`
-	SolveSeconds int64  `json:"solveSeconds"`
-}
-
-type GetMyProblemAnalysisModel struct {
-	DirectionProgress       []ProblemRecordModel          `json:"directionProgress"`
-	Rank                    int                           `json:"rank"`
-	TotalSolved             int                           `json:"totalSolved"`
-	AverageSolveSeconds     int64                         `json:"averageSolveSeconds"`
-	SolvedWithDurationCount int64                         `json:"solvedWithDurationCount"`
-	FastestProblem          ProblemSolveDurationCellModel `json:"fastestProblem"`
-	SlowestProblem          ProblemSolveDurationCellModel `json:"slowestProblem"`
-}
-
-type PremiumProblemDirectionSummaryModel struct {
-	Tag         string `json:"tag"`
-	SolvedCount int    `json:"solvedCount"`
-}
-
-type GetPremiumProblemAnalysisModel struct {
-	AccessScope               string                              `json:"accessScope"`
-	StrongestDirection        PremiumProblemDirectionSummaryModel `json:"strongestDirection"`
-	WeakestDirection          PremiumProblemDirectionSummaryModel `json:"weakestDirection"`
-	AverageSolveSeconds       int64                               `json:"averageSolveSeconds"`
-	FastestProblem            ProblemSolveDurationCellModel       `json:"fastestProblem"`
-	SlowestProblem            ProblemSolveDurationCellModel       `json:"slowestProblem"`
-	NextTrainingDirection     string                              `json:"nextTrainingDirection"`
-	RecommendedFirstDirection string                              `json:"recommendedFirstDirection"`
-	RecommendedSlowDirection  string                              `json:"recommendedSlowDirection"`
-	TrainingSuggestion        string                              `json:"trainingSuggestion"`
-	StrategyAdvice            string                              `json:"strategyAdvice"`
-}
-
-type GetPremiumCompetitionAnalysisModel struct {
-	AccessScope               string                                  `json:"accessScope"`
-	TotalCompetitions         int64                                   `json:"totalCompetitions"`
-	EndedCompetitions         int64                                   `json:"endedCompetitions"`
-	SnapshotReadyCount        int64                                   `json:"snapshotReadyCount"`
-	StrongestDirection        PremiumCompetitionDirectionSummaryModel `json:"strongestDirection"`
-	WeakestDirection          PremiumCompetitionDirectionSummaryModel `json:"weakestDirection"`
-	NextTrainingDirection     string                                  `json:"nextTrainingDirection"`
-	RecommendedFirstDirection string                                  `json:"recommendedFirstDirection"`
-	RecommendedSlowDirection  string                                  `json:"recommendedSlowDirection"`
-	TrainingSuggestion        string                                  `json:"trainingSuggestion"`
-	StrategyAdvice            string                                  `json:"strategyAdvice"`
-}
-
 type AwdpPatchApplyModel struct {
 	PatchId int    `json:"patchId"`
 	Status  bool   `json:"status"`
 	Message string `json:"message"`
+}
+
+type AwdpPatchSubmissionItemModel struct {
+	PatchId         string `json:"patchId"`
+	UserFilePath    string `json:"userFilePath"`
+	Status          string `json:"status"`
+	Message         string `json:"message,omitempty"`
+	SubmittedAt     uint64 `json:"submittedAt"`
+	FinishedAt      uint64 `json:"finishedAt,omitempty"`
+	DurationSeconds int64  `json:"durationSeconds,omitempty"`
+}
+
+type SubmitAwdpPatchModel struct {
+	Patch AwdpPatchSubmissionItemModel `json:"patch"`
 }
 
 type UploadCompetitionScoreModel struct {
@@ -279,20 +143,25 @@ type ExportedProblemAttachment struct {
 
 // ExportedProblem 导出的题目(完整信息)
 type ExportedProblem struct {
-	Id             string                      `json:"id"`
-	Name           string                      `json:"name"`
-	Desc           string                      `json:"desc"`
-	ProblemType    int                         `json:"problemType"` // 0-静态 1-动态
-	Difficulty     int                         `json:"difficulty"`  // 0-3 对应简单到极难
-	Tags           []ExportedProblemTag        `json:"tags"`
-	Attachments    []ExportedProblemAttachment `json:"attachments"`
-	Answer         string                      `json:"answer,omitempty"`       // 静态题目答案
-	DockerImage    string                      `json:"dockerImage,omitempty"`  // 动态题目镜像
-	HttpPorts      string                      `json:"httpPorts,omitempty"`    // HTTP端口
-	TcpPorts       string                      `json:"tcpPorts,omitempty"`     // TCP端口
-	IsStaticAnswer bool                        `json:"isStaticAnswer"`         // 是否静态Flag
-	EnvPrefix      string                      `json:"envPrefix,omitempty"`    // 环境变量前缀
-	AnswerPrefix   string                      `json:"answerPrefix,omitempty"` // Flag前缀
+	Id              string                      `json:"id"`
+	Name            string                      `json:"name"`
+	Desc            string                      `json:"desc"`
+	ProblemType     int                         `json:"problemType"` // 0-静态 1-动态 3-选择 4-填空 7-主观
+	Difficulty      int                         `json:"difficulty"`  // 0-3 对应简单到极难
+	Tags            []ExportedProblemTag        `json:"tags"`
+	Attachments     []ExportedProblemAttachment `json:"attachments"`
+	Answer          string                      `json:"answer,omitempty"`          // 静态题目答案
+	DockerImage     string                      `json:"dockerImage,omitempty"`     // 动态题目镜像
+	HttpPorts       string                      `json:"httpPorts,omitempty"`       // HTTP端口
+	TcpPorts        string                      `json:"tcpPorts,omitempty"`        // TCP端口
+	IsStaticAnswer  bool                        `json:"isStaticAnswer"`            // 是否静态Flag
+	EnvPrefix       string                      `json:"envPrefix,omitempty"`       // 环境变量前缀
+	AnswerPrefix    string                      `json:"answerPrefix,omitempty"`    // Flag前缀
+	Options         string                      `json:"options,omitempty"`         // 选择题选项
+	Answers         string                      `json:"answers,omitempty"`         // 选择题答案
+	ReferenceAnswer string                      `json:"referenceAnswer,omitempty"` // 主观题参考答案
+	ReviewGuideline string                      `json:"reviewGuideline,omitempty"` // 主观题审核指引
+	Score           int64                       `json:"score,omitempty"`           // 题目分值
 }
 
 // GetProblemBankForCompetitionModel 获取题库详情响应

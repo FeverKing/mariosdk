@@ -78,24 +78,9 @@ type CheckCompetitionAWDPReq struct {
 	SecretKey     string `json:"secretKey"`
 }
 
-type GetAwdpBundleDetailReq struct {
-	BundleId string `json:"bundleId"`
-}
-
-type GetAwdpProblemRankReq struct {
-	ProblemId string `json:"problemId"`
-}
-
-type GetUserCompetitionRecordReq struct {
-	Page int `json:"page"`
-	Size int `json:"size"`
-}
-
-type GetMyCompetitionAnalysisReq struct{}
-
-type GetPremiumCompetitionAnalysisReq struct {
-	RefType string `json:"refType,omitempty"`
-	RefId   string `json:"refId,omitempty"`
+type SubmitAwdpPatchReq struct {
+	ProblemId    string `json:"problemId"`
+	UserFilePath string `json:"userFilePath"`
 }
 
 type AwdpPatchApplyReq struct {
@@ -268,73 +253,17 @@ func (ac *ApiClient) CallCheckCompetitionAWDPApi(request interface{}) (*sdkmodel
 	return &checkCompetitionAWDPResp, nil
 }
 
-func (ac *ApiClient) CallGetAwdpBundleDetailApi(request interface{}) (*sdkmodel.GetAwdpBundleDetailModel, error) {
-	res, err := ac.CallApi("/competition/getAwdpBundleDetail", "POST", request)
+func (ac *ApiClient) CallSubmitAwdpPatchApi(request interface{}) (*sdkmodel.SubmitAwdpPatchModel, error) {
+	res, err := ac.CallApi("/competition/submitAwdpPatch", "POST", request)
 	if err != nil {
 		return nil, err
 	}
-	var resp sdkmodel.GetAwdpBundleDetailModel
+	var resp sdkmodel.SubmitAwdpPatchModel
 	err = json.Unmarshal(ConvertInterfaceToJson(res), &resp)
 	if err != nil {
 		return nil, err
 	}
-	sdklog.Infof("got awdp bundle detail resp: %v", resp)
-	return &resp, nil
-}
-
-func (ac *ApiClient) CallGetAwdpProblemRankApi(request interface{}) (*sdkmodel.GetAwdpProblemRankModel, error) {
-	res, err := ac.CallApi("/competition/getAwdpProblemRank", "POST", request)
-	if err != nil {
-		return nil, err
-	}
-	var resp sdkmodel.GetAwdpProblemRankModel
-	err = json.Unmarshal(ConvertInterfaceToJson(res), &resp)
-	if err != nil {
-		return nil, err
-	}
-	sdklog.Infof("got awdp problem rank resp: %v", resp)
-	return &resp, nil
-}
-
-func (ac *ApiClient) CallGetUserCompetitionRecordApi(request interface{}) (*sdkmodel.GetUserCompetitionRecordModel, error) {
-	res, err := ac.CallApi("/competition/getUserCompetitionRecord", "POST", request)
-	if err != nil {
-		return nil, err
-	}
-	var resp sdkmodel.GetUserCompetitionRecordModel
-	err = json.Unmarshal(ConvertInterfaceToJson(res), &resp)
-	if err != nil {
-		return nil, err
-	}
-	sdklog.Infof("got user competition record resp: %v", resp)
-	return &resp, nil
-}
-
-func (ac *ApiClient) CallGetMyCompetitionAnalysisApi(request interface{}) (*sdkmodel.GetMyCompetitionAnalysisModel, error) {
-	res, err := ac.CallApi("/competition/getMyCompetitionAnalysis", "POST", request)
-	if err != nil {
-		return nil, err
-	}
-	var resp sdkmodel.GetMyCompetitionAnalysisModel
-	err = json.Unmarshal(ConvertInterfaceToJson(res), &resp)
-	if err != nil {
-		return nil, err
-	}
-	sdklog.Infof("got my competition analysis resp: %v", resp)
-	return &resp, nil
-}
-
-func (ac *ApiClient) CallGetPremiumCompetitionAnalysisApi(request interface{}) (*sdkmodel.GetPremiumCompetitionAnalysisModel, error) {
-	res, err := ac.CallApi("/competition/getPremiumCompetitionAnalysis", "POST", request)
-	if err != nil {
-		return nil, err
-	}
-	var resp sdkmodel.GetPremiumCompetitionAnalysisModel
-	err = json.Unmarshal(ConvertInterfaceToJson(res), &resp)
-	if err != nil {
-		return nil, err
-	}
-	sdklog.Infof("got premium competition analysis resp: %v", resp)
+	sdklog.Infof("got submit awdp patch resp: %v", resp)
 	return &resp, nil
 }
 

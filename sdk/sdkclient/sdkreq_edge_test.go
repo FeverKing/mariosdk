@@ -217,37 +217,9 @@ func TestTypedApiWrappersRejectNullData(t *testing.T) {
 			},
 		},
 		{
-			name: "CallGetAwdpBundleDetailApi",
+			name: "CallSubmitAwdpPatchApi",
 			call: func(ac *sdkreq.ApiClient) error {
-				_, err := ac.CallGetAwdpBundleDetailApi(&sdkreq.GetAwdpBundleDetailReq{})
-				return err
-			},
-		},
-		{
-			name: "CallGetAwdpProblemRankApi",
-			call: func(ac *sdkreq.ApiClient) error {
-				_, err := ac.CallGetAwdpProblemRankApi(&sdkreq.GetAwdpProblemRankReq{})
-				return err
-			},
-		},
-		{
-			name: "CallGetUserCompetitionRecordApi",
-			call: func(ac *sdkreq.ApiClient) error {
-				_, err := ac.CallGetUserCompetitionRecordApi(&sdkreq.GetUserCompetitionRecordReq{})
-				return err
-			},
-		},
-		{
-			name: "CallGetMyCompetitionAnalysisApi",
-			call: func(ac *sdkreq.ApiClient) error {
-				_, err := ac.CallGetMyCompetitionAnalysisApi(&sdkreq.GetMyCompetitionAnalysisReq{})
-				return err
-			},
-		},
-		{
-			name: "CallGetPremiumCompetitionAnalysisApi",
-			call: func(ac *sdkreq.ApiClient) error {
-				_, err := ac.CallGetPremiumCompetitionAnalysisApi(&sdkreq.GetPremiumCompetitionAnalysisReq{})
+				_, err := ac.CallSubmitAwdpPatchApi(&sdkreq.SubmitAwdpPatchReq{})
 				return err
 			},
 		},

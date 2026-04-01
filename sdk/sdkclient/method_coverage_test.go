@@ -202,11 +202,6 @@ func TestSdkClientAdditionalWrapperSuccess(t *testing.T) {
 			call: func(c *DefaultClient) (any, error) { return c.GetBatchUserInfo([]string{"1"}) },
 		},
 		{
-			name: "SearchPublicProblem",
-			url:  "http://sdk.test/problem/searchPublicProblem",
-			call: func(c *DefaultClient) (any, error) { return c.SearchPublicProblem(&sdkreq.SearchPublicProblemReq{}) },
-		},
-		{
 			name: "GetUserInfoForCompetition",
 			url:  "http://sdk.test/competition/getUserInfoForCompetition",
 			call: func(c *DefaultClient) (any, error) {
@@ -273,6 +268,11 @@ func TestSdkClientAdditionalWrapperSuccess(t *testing.T) {
 			call: func(c *DefaultClient) (any, error) { return c.AwdpPatchApi(&sdkreq.AwdpPatchApplyReq{}) },
 		},
 		{
+			name: "SubmitAwdpPatch",
+			url:  "http://sdk.test/competition/submitAwdpPatch",
+			call: func(c *DefaultClient) (any, error) { return c.SubmitAwdpPatch(&sdkreq.SubmitAwdpPatchReq{}) },
+		},
+		{
 			name: "GetTeamInfoForCompetition",
 			url:  "http://sdk.test/competition/getTeamInfoForCompetition",
 			call: func(c *DefaultClient) (any, error) {
@@ -324,10 +324,6 @@ func TestSdkClientWrapperErrorCoverage(t *testing.T) {
 		call func(*DefaultClient) error
 	}{
 		{name: "GetBatchUserInfo", call: func(c *DefaultClient) error { _, err := c.GetBatchUserInfo([]string{"1"}); return err }},
-		{name: "SearchPublicProblem", call: func(c *DefaultClient) error {
-			_, err := c.SearchPublicProblem(&sdkreq.SearchPublicProblemReq{})
-			return err
-		}},
 		{name: "GetUserInfoForCompetition", call: func(c *DefaultClient) error {
 			_, err := c.GetUserInfoForCompetition(&sdkreq.GetUserInfoForCompetitionReq{})
 			return err
@@ -336,32 +332,8 @@ func TestSdkClientWrapperErrorCoverage(t *testing.T) {
 			_, err := c.StartChallengeContainer(&sdkreq.StartChallengeContainerReq{})
 			return err
 		}},
-		{name: "GetAwdpBundleDetail", call: func(c *DefaultClient) error {
-			_, err := c.GetAwdpBundleDetail(&sdkreq.GetAwdpBundleDetailReq{})
-			return err
-		}},
-		{name: "GetAwdpProblemRank", call: func(c *DefaultClient) error {
-			_, err := c.GetAwdpProblemRank(&sdkreq.GetAwdpProblemRankReq{})
-			return err
-		}},
-		{name: "GetUserCompetitionRecord", call: func(c *DefaultClient) error {
-			_, err := c.GetUserCompetitionRecord(&sdkreq.GetUserCompetitionRecordReq{})
-			return err
-		}},
-		{name: "GetMyCompetitionAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetMyCompetitionAnalysis(&sdkreq.GetMyCompetitionAnalysisReq{})
-			return err
-		}},
-		{name: "GetPremiumCompetitionAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetPremiumCompetitionAnalysis(&sdkreq.GetPremiumCompetitionAnalysisReq{})
-			return err
-		}},
-		{name: "GetMyProblemAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetMyProblemAnalysis(&sdkreq.GetMyProblemAnalysisReq{})
-			return err
-		}},
-		{name: "GetPremiumProblemAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetPremiumProblemAnalysis(&sdkreq.GetPremiumProblemAnalysisReq{})
+		{name: "SubmitAwdpPatch", call: func(c *DefaultClient) error {
+			_, err := c.SubmitAwdpPatch(&sdkreq.SubmitAwdpPatchReq{})
 			return err
 		}},
 		{name: "StopChallengeContainer", call: func(c *DefaultClient) error {
@@ -397,6 +369,10 @@ func TestSdkClientWrapperErrorCoverage(t *testing.T) {
 			return err
 		}},
 		{name: "AwdpPatchApi", call: func(c *DefaultClient) error { _, err := c.AwdpPatchApi(&sdkreq.AwdpPatchApplyReq{}); return err }},
+		{name: "SubmitAwdpPatch", call: func(c *DefaultClient) error {
+			_, err := c.SubmitAwdpPatch(&sdkreq.SubmitAwdpPatchReq{})
+			return err
+		}},
 		{name: "UploadCompetitionScore", call: func(c *DefaultClient) error {
 			_, err := c.UploadCompetitionScore(&sdkreq.UploadCompetitionScoreRequest{})
 			return err
@@ -452,10 +428,6 @@ func TestSdkClientEnsureAuthFailureCoverage(t *testing.T) {
 		call func(*DefaultClient) error
 	}{
 		{name: "GetBatchUserInfo", call: func(c *DefaultClient) error { _, err := c.GetBatchUserInfo([]string{"1"}); return err }},
-		{name: "SearchPublicProblem", call: func(c *DefaultClient) error {
-			_, err := c.SearchPublicProblem(&sdkreq.SearchPublicProblemReq{})
-			return err
-		}},
 		{name: "GetUserInfoForCompetition", call: func(c *DefaultClient) error {
 			_, err := c.GetUserInfoForCompetition(&sdkreq.GetUserInfoForCompetitionReq{})
 			return err
@@ -464,32 +436,8 @@ func TestSdkClientEnsureAuthFailureCoverage(t *testing.T) {
 			_, err := c.StartChallengeContainer(&sdkreq.StartChallengeContainerReq{})
 			return err
 		}},
-		{name: "GetAwdpBundleDetail", call: func(c *DefaultClient) error {
-			_, err := c.GetAwdpBundleDetail(&sdkreq.GetAwdpBundleDetailReq{})
-			return err
-		}},
-		{name: "GetAwdpProblemRank", call: func(c *DefaultClient) error {
-			_, err := c.GetAwdpProblemRank(&sdkreq.GetAwdpProblemRankReq{})
-			return err
-		}},
-		{name: "GetUserCompetitionRecord", call: func(c *DefaultClient) error {
-			_, err := c.GetUserCompetitionRecord(&sdkreq.GetUserCompetitionRecordReq{})
-			return err
-		}},
-		{name: "GetMyCompetitionAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetMyCompetitionAnalysis(&sdkreq.GetMyCompetitionAnalysisReq{})
-			return err
-		}},
-		{name: "GetPremiumCompetitionAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetPremiumCompetitionAnalysis(&sdkreq.GetPremiumCompetitionAnalysisReq{})
-			return err
-		}},
-		{name: "GetMyProblemAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetMyProblemAnalysis(&sdkreq.GetMyProblemAnalysisReq{})
-			return err
-		}},
-		{name: "GetPremiumProblemAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetPremiumProblemAnalysis(&sdkreq.GetPremiumProblemAnalysisReq{})
+		{name: "SubmitAwdpPatch", call: func(c *DefaultClient) error {
+			_, err := c.SubmitAwdpPatch(&sdkreq.SubmitAwdpPatchReq{})
 			return err
 		}},
 		{name: "StopChallengeContainer", call: func(c *DefaultClient) error {
@@ -533,20 +481,7 @@ func TestProblemApiDecodeErrors(t *testing.T) {
 	cases := []struct {
 		name string
 		call func(*DefaultClient) error
-	}{
-		{name: "SearchPublicProblem", call: func(c *DefaultClient) error {
-			_, err := c.SearchPublicProblem(&sdkreq.SearchPublicProblemReq{})
-			return err
-		}},
-		{name: "GetMyProblemAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetMyProblemAnalysis(&sdkreq.GetMyProblemAnalysisReq{})
-			return err
-		}},
-		{name: "GetPremiumProblemAnalysis", call: func(c *DefaultClient) error {
-			_, err := c.GetPremiumProblemAnalysis(&sdkreq.GetPremiumProblemAnalysisReq{})
-			return err
-		}},
-	}
+	}{}
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {

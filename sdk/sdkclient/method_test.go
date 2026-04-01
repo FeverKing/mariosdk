@@ -125,245 +125,37 @@ func TestStartChallengeContainerCarriesCompetitionContext(t *testing.T) {
 	}
 }
 
-func TestGetAwdpBundleDetail(t *testing.T) {
-	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"bundleId":"9101","bundleName":"AWDP Bundle","problemIds":["9001","9002"],"problemCount":2}}`}
+func TestSubmitAwdpPatch(t *testing.T) {
+	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"patch":{"patchId":"11","userFilePath":"upload/patch.tar","status":"failed","message":"checker rejected","submittedAt":1000,"finishedAt":1010,"durationSeconds":10}}}`}
 	client := newAuthedClient(requester)
 
-	resp, err := client.GetAwdpBundleDetail(&sdkreq.GetAwdpBundleDetailReq{BundleId: "9101"})
-	if err != nil {
-		t.Fatalf("GetAwdpBundleDetail() error = %v", err)
-	}
-	if resp == nil {
-		t.Fatal("GetAwdpBundleDetail() returned nil response")
-	}
-	if requester.lastReq == nil {
-		t.Fatal("requester did not receive request")
-	}
-	if requester.lastReq.Method != http.MethodPost {
-		t.Fatalf("request method = %s", requester.lastReq.Method)
-	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/competition/getAwdpBundleDetail" {
-		t.Fatalf("request URL = %s", got)
-	}
-	body, readErr := io.ReadAll(requester.lastReq.Body)
-	if readErr != nil {
-		t.Fatalf("ReadAll() error = %v", readErr)
-	}
-	if !bytes.Contains(body, []byte(`"bundleId":"9101"`)) {
-		t.Fatalf("request body = %s", string(body))
-	}
-	if resp.BundleId != "9101" || resp.BundleName != "AWDP Bundle" {
-		t.Fatalf("response = %#v", resp)
-	}
-	if len(resp.ProblemIds) != 2 || resp.ProblemIds[0] != "9001" || resp.ProblemCount != 2 {
-		t.Fatalf("response = %#v", resp)
-	}
-}
-
-func TestGetAwdpProblemRank(t *testing.T) {
-	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"attackSpeedRank":[{"userId":"42","userName":"alice","problemId":"9001","duration":40,"rank":1}],"defenseSpeedRank":[{"userId":"78","userName":"carol","problemId":"9001","duration":10,"rank":1}]}}`}
-	client := newAuthedClient(requester)
-
-	resp, err := client.GetAwdpProblemRank(&sdkreq.GetAwdpProblemRankReq{ProblemId: "9001"})
-	if err != nil {
-		t.Fatalf("GetAwdpProblemRank() error = %v", err)
-	}
-	if resp == nil {
-		t.Fatal("GetAwdpProblemRank() returned nil response")
-	}
-	if requester.lastReq == nil {
-		t.Fatal("requester did not receive request")
-	}
-	if requester.lastReq.Method != http.MethodPost {
-		t.Fatalf("request method = %s", requester.lastReq.Method)
-	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/competition/getAwdpProblemRank" {
-		t.Fatalf("request URL = %s", got)
-	}
-	body, readErr := io.ReadAll(requester.lastReq.Body)
-	if readErr != nil {
-		t.Fatalf("ReadAll() error = %v", readErr)
-	}
-	if !bytes.Contains(body, []byte(`"problemId":"9001"`)) {
-		t.Fatalf("request body = %s", string(body))
-	}
-	if len(resp.AttackSpeedRank) != 1 || len(resp.DefenseSpeedRank) != 1 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.AttackSpeedRank[0].UserId != "42" || resp.AttackSpeedRank[0].Duration != 40 || resp.AttackSpeedRank[0].Rank != 1 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.DefenseSpeedRank[0].UserName != "carol" || resp.DefenseSpeedRank[0].ProblemId != "9001" {
-		t.Fatalf("response = %#v", resp)
-	}
-}
-
-func TestGetUserCompetitionRecord(t *testing.T) {
-	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"totalCount":3,"inProcessCount":1,"notStartCount":1,"endedCount":1,"competitions":[{"id":"c-1","name":"AWDP Spring","postCompetitionSnapshotPath":"/snapshots/c-1.json"}]}}`}
-	client := newAuthedClient(requester)
-
-	resp, err := client.GetUserCompetitionRecord(&sdkreq.GetUserCompetitionRecordReq{Page: 1, Size: 10})
-	if err != nil {
-		t.Fatalf("GetUserCompetitionRecord() error = %v", err)
-	}
-	if resp == nil {
-		t.Fatal("GetUserCompetitionRecord() returned nil response")
-	}
-	if requester.lastReq == nil {
-		t.Fatal("requester did not receive request")
-	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/competition/getUserCompetitionRecord" {
-		t.Fatalf("request URL = %s", got)
-	}
-	body, readErr := io.ReadAll(requester.lastReq.Body)
-	if readErr != nil {
-		t.Fatalf("ReadAll() error = %v", readErr)
-	}
-	for _, want := range []string{`"page":1`, `"size":10`} {
-		if !bytes.Contains(body, []byte(want)) {
-			t.Fatalf("request body missing %s: %s", want, string(body))
-		}
-	}
-	if resp.TotalCount != 3 || len(resp.Competitions) != 1 {
-		t.Fatalf("response = %#v", resp)
-	}
-}
-
-func TestGetMyCompetitionAnalysis(t *testing.T) {
-	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"totalCompetitions":9,"notStartCompetitions":2,"inProcessCompetitions":3,"endedCompetitions":4,"snapshotReadyCount":4,"lastSnapshotUpdatedAt":1700000001,"averageSolveSeconds":66,"bestSolveSeconds":12,"worstSolveSeconds":201,"strongestTag":"web","weakestTag":"misc","nextTrainingDirection":"pwn","recommendedFirstDirection":"web","recommendedSlowDirection":"misc","trainingSuggestion":"train pwn","strategyAdvice":"solve web first"}}`}
-	client := newAuthedClient(requester)
-
-	resp, err := client.GetMyCompetitionAnalysis(&sdkreq.GetMyCompetitionAnalysisReq{})
-	if err != nil {
-		t.Fatalf("GetMyCompetitionAnalysis() error = %v", err)
-	}
-	if resp == nil {
-		t.Fatal("GetMyCompetitionAnalysis() returned nil response")
-	}
-	if requester.lastReq == nil {
-		t.Fatal("requester did not receive request")
-	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/competition/getMyCompetitionAnalysis" {
-		t.Fatalf("request URL = %s", got)
-	}
-	if resp.TotalCompetitions != 9 || resp.SnapshotReadyCount != 4 || resp.LastSnapshotUpdatedAt != 1700000001 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.AverageSolveSeconds != 66 || resp.BestSolveSeconds != 12 || resp.WorstSolveSeconds != 201 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.StrongestTag != "web" || resp.WeakestTag != "misc" {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.NextTrainingDirection != "pwn" || resp.RecommendedFirstDirection != "web" {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.RecommendedSlowDirection != "misc" || resp.TrainingSuggestion != "train pwn" || resp.StrategyAdvice != "solve web first" {
-		t.Fatalf("response = %#v", resp)
-	}
-}
-
-func TestGetPremiumCompetitionAnalysis(t *testing.T) {
-	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"accessScope":"scope","totalCompetitions":5,"endedCompetitions":4,"snapshotReadyCount":4,"strongestDirection":{"tag":"web","solvedCount":7},"weakestDirection":{"tag":"pwn","solvedCount":1},"nextTrainingDirection":"pwn","recommendedFirstDirection":"web","recommendedSlowDirection":"pwn","trainingSuggestion":"train pwn","strategyAdvice":"solve web first"}}`}
-	client := newAuthedClient(requester)
-
-	resp, err := client.GetPremiumCompetitionAnalysis(&sdkreq.GetPremiumCompetitionAnalysisReq{
-		RefType: "awdp_bundle",
-		RefId:   "9101",
+	resp, err := client.SubmitAwdpPatch(&sdkreq.SubmitAwdpPatchReq{
+		ProblemId:    "9001",
+		UserFilePath: "upload/patch.tar",
 	})
 	if err != nil {
-		t.Fatalf("GetPremiumCompetitionAnalysis() error = %v", err)
+		t.Fatalf("SubmitAwdpPatch() error = %v", err)
 	}
 	if resp == nil {
-		t.Fatal("GetPremiumCompetitionAnalysis() returned nil response")
+		t.Fatal("SubmitAwdpPatch() returned nil response")
 	}
 	if requester.lastReq == nil {
 		t.Fatal("requester did not receive request")
 	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/competition/getPremiumCompetitionAnalysis" {
+	if got := requester.lastReq.URL.String(); got != "http://sdk.test/competition/submitAwdpPatch" {
 		t.Fatalf("request URL = %s", got)
 	}
 	body, readErr := io.ReadAll(requester.lastReq.Body)
 	if readErr != nil {
 		t.Fatalf("ReadAll() error = %v", readErr)
 	}
-	for _, want := range []string{`"refType":"awdp_bundle"`, `"refId":"9101"`} {
+	bodyStr := string(body)
+	for _, want := range []string{`"problemId":"9001"`, `"userFilePath":"upload/patch.tar"`} {
 		if !bytes.Contains(body, []byte(want)) {
-			t.Fatalf("request body missing %s: %s", want, string(body))
+			t.Fatalf("request body missing %s: %s", want, bodyStr)
 		}
 	}
-	if resp.AccessScope != "scope" || resp.StrongestDirection.Tag != "web" || resp.WeakestDirection.SolvedCount != 1 {
-		t.Fatalf("response = %#v", resp)
-	}
-}
-
-func TestGetMyProblemAnalysis(t *testing.T) {
-	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"directionProgress":[{"tag":"web","count":3},{"tag":"pwn","count":1}],"rank":5,"totalSolved":4,"averageSolveSeconds":66,"solvedWithDurationCount":3,"fastestProblem":{"problemId":"301","problemName":"web-quick","solveSeconds":12},"slowestProblem":{"problemId":"302","problemName":"pwn-slow","solveSeconds":201}}}`}
-	client := newAuthedClient(requester)
-
-	resp, err := client.GetMyProblemAnalysis(&sdkreq.GetMyProblemAnalysisReq{})
-	if err != nil {
-		t.Fatalf("GetMyProblemAnalysis() error = %v", err)
-	}
-	if resp == nil {
-		t.Fatal("GetMyProblemAnalysis() returned nil response")
-	}
-	if requester.lastReq == nil {
-		t.Fatal("requester did not receive request")
-	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/problem/getMyProblemAnalysis" {
-		t.Fatalf("request URL = %s", got)
-	}
-	if resp.Rank != 5 || resp.TotalSolved != 4 || resp.AverageSolveSeconds != 66 || resp.SolvedWithDurationCount != 3 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if len(resp.DirectionProgress) != 2 || resp.DirectionProgress[0].Tag != "web" || resp.DirectionProgress[0].Count != 3 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.FastestProblem.ProblemId != "301" || resp.SlowestProblem.SolveSeconds != 201 {
-		t.Fatalf("response = %#v", resp)
-	}
-}
-
-func TestGetPremiumProblemAnalysis(t *testing.T) {
-	requester := &fakeRequester{respBody: `{"code":200,"msg":"ok","data":{"accessScope":"scope","strongestDirection":{"tag":"web","solvedCount":7},"weakestDirection":{"tag":"pwn","solvedCount":1},"averageSolveSeconds":88,"fastestProblem":{"problemId":"301","problemName":"web-quick","solveSeconds":12},"slowestProblem":{"problemId":"302","problemName":"pwn-slow","solveSeconds":201},"nextTrainingDirection":"pwn","recommendedFirstDirection":"web","recommendedSlowDirection":"pwn","trainingSuggestion":"train pwn","strategyAdvice":"solve web first"}}`}
-	client := newAuthedClient(requester)
-
-	resp, err := client.GetPremiumProblemAnalysis(&sdkreq.GetPremiumProblemAnalysisReq{
-		RefType: "awdp_problem",
-		RefId:   "9101",
-	})
-	if err != nil {
-		t.Fatalf("GetPremiumProblemAnalysis() error = %v", err)
-	}
-	if resp == nil {
-		t.Fatal("GetPremiumProblemAnalysis() returned nil response")
-	}
-	if requester.lastReq == nil {
-		t.Fatal("requester did not receive request")
-	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/problem/getPremiumProblemAnalysis" {
-		t.Fatalf("request URL = %s", got)
-	}
-	body, readErr := io.ReadAll(requester.lastReq.Body)
-	if readErr != nil {
-		t.Fatalf("ReadAll() error = %v", readErr)
-	}
-	for _, want := range []string{`"refType":"awdp_problem"`, `"refId":"9101"`} {
-		if !bytes.Contains(body, []byte(want)) {
-			t.Fatalf("request body missing %s: %s", want, string(body))
-		}
-	}
-	if resp.AccessScope != "scope" || resp.StrongestDirection.Tag != "web" || resp.WeakestDirection.SolvedCount != 1 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.AverageSolveSeconds != 88 || resp.FastestProblem.ProblemId != "301" || resp.SlowestProblem.SolveSeconds != 201 {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.NextTrainingDirection != "pwn" || resp.RecommendedFirstDirection != "web" || resp.RecommendedSlowDirection != "pwn" {
-		t.Fatalf("response = %#v", resp)
-	}
-	if resp.TrainingSuggestion != "train pwn" || resp.StrategyAdvice != "solve web first" {
+	if resp.Patch.PatchId != "11" || resp.Patch.Status != "failed" || resp.Patch.Message != "checker rejected" {
 		t.Fatalf("response = %#v", resp)
 	}
 }
