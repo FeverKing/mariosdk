@@ -142,7 +142,7 @@ func TestSubmitAwdpPatch(t *testing.T) {
 	if requester.lastReq == nil {
 		t.Fatal("requester did not receive request")
 	}
-	if got := requester.lastReq.URL.String(); got != "http://sdk.test/competition/submitAwdpPatch" {
+	if got := requester.lastReq.URL.String(); got != "http://sdk.test/problem/awdp/submitPatch" {
 		t.Fatalf("request URL = %s", got)
 	}
 	body, readErr := io.ReadAll(requester.lastReq.Body)

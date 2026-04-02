@@ -269,7 +269,7 @@ func TestSdkClientAdditionalWrapperSuccess(t *testing.T) {
 		},
 		{
 			name: "SubmitAwdpPatch",
-			url:  "http://sdk.test/competition/submitAwdpPatch",
+			url:  "http://sdk.test/problem/awdp/submitPatch",
 			call: func(c *DefaultClient) (any, error) { return c.SubmitAwdpPatch(&sdkreq.SubmitAwdpPatchReq{}) },
 		},
 		{
