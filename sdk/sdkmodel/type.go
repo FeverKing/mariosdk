@@ -143,25 +143,28 @@ type ExportedProblemAttachment struct {
 
 // ExportedProblem 导出的题目(完整信息)
 type ExportedProblem struct {
-	Id              string                      `json:"id"`
-	Name            string                      `json:"name"`
-	Desc            string                      `json:"desc"`
-	ProblemType     int                         `json:"problemType"` // 0-静态 1-动态 3-选择 4-填空 7-主观
-	Difficulty      int                         `json:"difficulty"`  // 0-3 对应简单到极难
-	Tags            []ExportedProblemTag        `json:"tags"`
-	Attachments     []ExportedProblemAttachment `json:"attachments"`
-	Answer          string                      `json:"answer,omitempty"`          // 静态题目答案
-	DockerImage     string                      `json:"dockerImage,omitempty"`     // 动态题目镜像
-	HttpPorts       string                      `json:"httpPorts,omitempty"`       // HTTP端口
-	TcpPorts        string                      `json:"tcpPorts,omitempty"`        // TCP端口
-	IsStaticAnswer  bool                        `json:"isStaticAnswer"`            // 是否静态Flag
-	EnvPrefix       string                      `json:"envPrefix,omitempty"`       // 环境变量前缀
-	AnswerPrefix    string                      `json:"answerPrefix,omitempty"`    // Flag前缀
-	Options         string                      `json:"options,omitempty"`         // 选择题选项
-	Answers         string                      `json:"answers,omitempty"`         // 选择题答案
-	ReferenceAnswer string                      `json:"referenceAnswer,omitempty"` // 主观题参考答案
-	ReviewGuideline string                      `json:"reviewGuideline,omitempty"` // 主观题审核指引
-	Score           int64                       `json:"score,omitempty"`           // 题目分值
+	Id               string                      `json:"id"`
+	Name             string                      `json:"name"`
+	Desc             string                      `json:"desc"`
+	ProblemType      int                         `json:"problemType"` // 0-静态 1-动态 3-选择 4-填空 7-主观
+	Difficulty       int                         `json:"difficulty"`  // 0-3 对应简单到极难
+	Tags             []ExportedProblemTag        `json:"tags"`
+	Attachments      []ExportedProblemAttachment `json:"attachments"`
+	Answer           string                      `json:"answer,omitempty"`           // 静态题目答案
+	DockerImage      string                      `json:"dockerImage,omitempty"`      // 动态题目镜像
+	HttpPorts        string                      `json:"httpPorts,omitempty"`        // HTTP端口
+	TcpPorts         string                      `json:"tcpPorts,omitempty"`         // TCP端口
+	IsStaticAnswer   bool                        `json:"isStaticAnswer"`             // 是否静态Flag
+	EnvPrefix        string                      `json:"envPrefix,omitempty"`        // 环境变量前缀
+	AnswerPrefix     string                      `json:"answerPrefix,omitempty"`     // Flag前缀
+	Options          string                      `json:"options,omitempty"`          // 选择题选项
+	Answers          string                      `json:"answers,omitempty"`          // 选择题答案
+	ReferenceAnswer  string                      `json:"referenceAnswer,omitempty"`  // 主观题参考答案
+	ReviewGuideline  string                      `json:"reviewGuideline,omitempty"`  // 主观题审核指引
+	Score            int64                       `json:"score,omitempty"`            // 题目分值
+	AwdpCheckImage   string                      `json:"awdpCheckImage,omitempty"`   // AWDP 检查镜像
+	AwdpCheckFileUrl string                      `json:"awdpCheckFileUrl,omitempty"` // AWDP 检查文件
+	AwdpCheckCommand string                      `json:"awdpCheckCommand,omitempty"` // AWDP 检查命令
 }
 
 // GetProblemBankForCompetitionModel 获取题库详情响应
