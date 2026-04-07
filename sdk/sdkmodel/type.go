@@ -136,35 +136,49 @@ type ExportedProblemTag struct {
 
 // ExportedProblemAttachment 导出的题目附件
 type ExportedProblemAttachment struct {
-	Id   uint64 `json:"id"`
-	Name string `json:"name"`
-	Path string `json:"path"`
+	Id                      uint64                  `json:"id"`
+	Name                    string                  `json:"name"`
+	Path                    string                  `json:"path"`
+	IsDynamicAttachment     bool                    `json:"isDynamicAttachment,omitempty"`
+	DynamicAttachmentConfig DynamicAttachmentConfig `json:"dynamicAttachmentConfig,omitempty"`
+}
+
+type DynamicAttachmentConfig struct {
+	FlagPrefix      string `json:"flagPrefix,omitempty"`
+	FlagTotalLen    uint64 `json:"flagTotalLen,omitempty"`
+	TemplateImage   string `json:"templateImage,omitempty"`
+	CooldownSeconds uint64 `json:"cooldownSeconds,omitempty"`
 }
 
 // ExportedProblem 导出的题目(完整信息)
 type ExportedProblem struct {
-	Id               string                      `json:"id"`
-	Name             string                      `json:"name"`
-	Desc             string                      `json:"desc"`
-	ProblemType      int                         `json:"problemType"` // 0-静态 1-动态 3-选择 4-填空 7-主观
-	Difficulty       int                         `json:"difficulty"`  // 0-3 对应简单到极难
-	Tags             []ExportedProblemTag        `json:"tags"`
-	Attachments      []ExportedProblemAttachment `json:"attachments"`
-	Answer           string                      `json:"answer,omitempty"`           // 静态题目答案
-	DockerImage      string                      `json:"dockerImage,omitempty"`      // 动态题目镜像
-	HttpPorts        string                      `json:"httpPorts,omitempty"`        // HTTP端口
-	TcpPorts         string                      `json:"tcpPorts,omitempty"`         // TCP端口
-	IsStaticAnswer   bool                        `json:"isStaticAnswer"`             // 是否静态Flag
-	EnvPrefix        string                      `json:"envPrefix,omitempty"`        // 环境变量前缀
-	AnswerPrefix     string                      `json:"answerPrefix,omitempty"`     // Flag前缀
-	Options          string                      `json:"options,omitempty"`          // 选择题选项
-	Answers          string                      `json:"answers,omitempty"`          // 选择题答案
-	ReferenceAnswer  string                      `json:"referenceAnswer,omitempty"`  // 主观题参考答案
-	ReviewGuideline  string                      `json:"reviewGuideline,omitempty"`  // 主观题审核指引
-	Score            int64                       `json:"score,omitempty"`            // 题目分值
-	AwdpCheckImage   string                      `json:"awdpCheckImage,omitempty"`   // AWDP 检查镜像
-	AwdpCheckFileUrl string                      `json:"awdpCheckFileUrl,omitempty"` // AWDP 检查文件
-	AwdpCheckCommand string                      `json:"awdpCheckCommand,omitempty"` // AWDP 检查命令
+	Id                               string                      `json:"id"`
+	Name                             string                      `json:"name"`
+	Desc                             string                      `json:"desc"`
+	ProblemType                      int                         `json:"problemType"` // 0-静态 1-动态 3-选择 4-填空 7-主观
+	Difficulty                       int                         `json:"difficulty"`  // 0-3 对应简单到极难
+	Tags                             []ExportedProblemTag        `json:"tags"`
+	Attachments                      []ExportedProblemAttachment `json:"attachments"`
+	Answer                           string                      `json:"answer,omitempty"`                           // 静态题目答案
+	DockerImage                      string                      `json:"dockerImage,omitempty"`                      // 动态题目镜像
+	HttpPorts                        string                      `json:"httpPorts,omitempty"`                        // HTTP端口
+	TcpPorts                         string                      `json:"tcpPorts,omitempty"`                         // TCP端口
+	IsStaticAnswer                   bool                        `json:"isStaticAnswer"`                             // 是否静态Flag
+	EnvPrefix                        string                      `json:"envPrefix,omitempty"`                        // 环境变量前缀
+	AnswerPrefix                     string                      `json:"answerPrefix,omitempty"`                     // Flag前缀
+	IsDynamicAttachment              bool                        `json:"isDynamicAttachment,omitempty"`              // 是否为动态附件题
+	DynamicAttachmentFlagPrefix      string                      `json:"dynamicAttachmentFlagPrefix,omitempty"`      // 动态附件 flag 前缀
+	DynamicAttachmentFlagTotalLen    uint64                      `json:"dynamicAttachmentFlagTotalLen,omitempty"`    // 动态附件 flag 总长度
+	DynamicAttachmentTemplateImage   string                      `json:"dynamicAttachmentTemplateImage,omitempty"`   // 动态附件模板镜像
+	DynamicAttachmentCooldownSeconds uint64                      `json:"dynamicAttachmentCooldownSeconds,omitempty"` // 动态附件获取冷却
+	Options                          string                      `json:"options,omitempty"`                          // 选择题选项
+	Answers                          string                      `json:"answers,omitempty"`                          // 选择题答案
+	ReferenceAnswer                  string                      `json:"referenceAnswer,omitempty"`                  // 主观题参考答案
+	ReviewGuideline                  string                      `json:"reviewGuideline,omitempty"`                  // 主观题审核指引
+	Score                            int64                       `json:"score,omitempty"`                            // 题目分值
+	AwdpCheckImage                   string                      `json:"awdpCheckImage,omitempty"`                   // AWDP 检查镜像
+	AwdpCheckFileUrl                 string                      `json:"awdpCheckFileUrl,omitempty"`                 // AWDP 检查文件
+	AwdpCheckCommand                 string                      `json:"awdpCheckCommand,omitempty"`                 // AWDP 检查命令
 }
 
 // GetProblemBankForCompetitionModel 获取题库详情响应
