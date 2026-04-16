@@ -29,3 +29,23 @@ func TestGetProblemBankForCompetitionDecodesTheoryFields(t *testing.T) {
 		t.Fatalf("subjective theory fields not decoded: %+v", resp.Problems[2])
 	}
 }
+
+func TestGetProblemBankForCompetitionDecodesRuntimeModeFields(t *testing.T) {
+	client := newAuthedClient(&fakeRequester{
+		respBody: `{"code":200,"msg":"ok","data":{"id":"9","name":"bank-9","des":"d9","problemNum":1,"problems":[{"id":"2001","name":"scene-1","desc":"scene-desc","problemType":1,"difficulty":2,"runtimeMode":"pentest","topologyBinding":{"provider":"csbridge","topologyId":"topo-1","deployableTemplateId":"tpl-1"}}]}}`,
+	})
+
+	resp, err := client.GetProblemBankForCompetition(&sdkreq.GetProblemBankForCompetitionReq{})
+	if err != nil {
+		t.Fatalf("GetProblemBankForCompetition() error = %v", err)
+	}
+	if len(resp.Problems) != 1 {
+		t.Fatalf("expected 1 problem, got %d", len(resp.Problems))
+	}
+	if resp.Problems[0].RuntimeMode != "pentest" {
+		t.Fatalf("runtimeMode not decoded: %+v", resp.Problems[0])
+	}
+	if resp.Problems[0].TopologyBinding.Provider != "csbridge" || resp.Problems[0].TopologyBinding.TopologyId != "topo-1" {
+		t.Fatalf("topologyBinding not decoded: %+v", resp.Problems[0].TopologyBinding)
+	}
+}

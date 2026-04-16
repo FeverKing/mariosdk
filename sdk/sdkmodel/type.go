@@ -150,6 +150,16 @@ type DynamicAttachmentConfig struct {
 	CooldownSeconds uint64 `json:"cooldownSeconds,omitempty"`
 }
 
+type ExportedTopologyBinding struct {
+	Provider             string `json:"provider,omitempty"`
+	TopologyId           string `json:"topologyId,omitempty"`
+	DeployableTemplateId string `json:"deployableTemplateId,omitempty"`
+	TopologySnapshot     string `json:"topologySnapshot,omitempty"`
+	TemplateVersion      string `json:"templateVersion,omitempty"`
+	PublicationStatus    string `json:"publicationStatus,omitempty"`
+	ResourceHints        string `json:"resourceHints,omitempty"`
+}
+
 // ExportedProblem 导出的题目(完整信息)
 type ExportedProblem struct {
 	Id                               string                      `json:"id"`
@@ -179,6 +189,8 @@ type ExportedProblem struct {
 	AwdpCheckImage                   string                      `json:"awdpCheckImage,omitempty"`                   // AWDP 检查镜像
 	AwdpCheckFileUrl                 string                      `json:"awdpCheckFileUrl,omitempty"`                 // AWDP 检查文件
 	AwdpCheckCommand                 string                      `json:"awdpCheckCommand,omitempty"`                 // AWDP 检查命令
+	RuntimeMode                      string                      `json:"runtimeMode,omitempty"`                      // none/docker/pentest
+	TopologyBinding                  ExportedTopologyBinding     `json:"topologyBinding,omitempty"`
 }
 
 // GetProblemBankForCompetitionModel 获取题库详情响应
