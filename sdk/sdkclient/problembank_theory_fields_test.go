@@ -49,3 +49,23 @@ func TestGetProblemBankForCompetitionDecodesRuntimeModeFields(t *testing.T) {
 		t.Fatalf("topologyBinding not decoded: %+v", resp.Problems[0].TopologyBinding)
 	}
 }
+
+func TestGetProblemBankForCompetitionDecodesSceneSubQuestions(t *testing.T) {
+	client := newAuthedClient(&fakeRequester{
+		respBody: `{"code":200,"msg":"ok","data":{"id":"9","name":"bank-9","des":"d9","problemNum":1,"problems":[{"id":"2001","name":"scene-1","desc":"scene-desc","problemType":5,"difficulty":2,"runtimeMode":"pentest","scoreCalculateType":2,"subQuestions":[{"id":1,"description":"入口点","answer":"flag{a}"},{"id":2,"description":"提权链","answer":"flag{b}"}]}]}}`,
+	})
+
+	resp, err := client.GetProblemBankForCompetition(&sdkreq.GetProblemBankForCompetitionReq{})
+	if err != nil {
+		t.Fatalf("GetProblemBankForCompetition() error = %v", err)
+	}
+	if len(resp.Problems) != 1 {
+		t.Fatalf("expected 1 problem, got %d", len(resp.Problems))
+	}
+	if resp.Problems[0].ScoreCalculateType != 2 {
+		t.Fatalf("scoreCalculateType not decoded: %+v", resp.Problems[0])
+	}
+	if len(resp.Problems[0].SubQuestions) != 2 || resp.Problems[0].SubQuestions[0].Description != "入口点" || resp.Problems[0].SubQuestions[1].Answer != "flag{b}" {
+		t.Fatalf("subQuestions not decoded: %+v", resp.Problems[0].SubQuestions)
+	}
+}

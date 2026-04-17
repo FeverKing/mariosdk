@@ -160,6 +160,12 @@ type ExportedTopologyBinding struct {
 	ResourceHints        string `json:"resourceHints,omitempty"`
 }
 
+type ExportedSubQuestion struct {
+	Id          uint64 `json:"id"`
+	Description string `json:"description"`
+	Answer      string `json:"answer"`
+}
+
 // ExportedProblem 导出的题目(完整信息)
 type ExportedProblem struct {
 	Id                               string                      `json:"id"`
@@ -191,6 +197,8 @@ type ExportedProblem struct {
 	AwdpCheckCommand                 string                      `json:"awdpCheckCommand,omitempty"`                 // AWDP 检查命令
 	RuntimeMode                      string                      `json:"runtimeMode,omitempty"`                      // none/docker/pentest
 	TopologyBinding                  ExportedTopologyBinding     `json:"topologyBinding,omitempty"`
+	ScoreCalculateType               uint64                      `json:"scoreCalculateType,omitempty"` // 实景题计分方式
+	SubQuestions                     []ExportedSubQuestion       `json:"subQuestions,omitempty"`
 }
 
 // GetProblemBankForCompetitionModel 获取题库详情响应
