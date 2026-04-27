@@ -84,15 +84,16 @@ type SubmitAwdpPatchReq struct {
 }
 
 type AwdpPatchApplyReq struct {
-	UserId        string `json:"userId"`        // 用户ID
-	UserFilePath  string `json:"userFilePath"`  //minio中存储的用戶上傳的tar文件路径
-	CheckCommand  string `json:"checkCommand"`  // 检查命令
-	CheckFilePath string `json:"checkFilePath"` // 检查文件的URL,應該是指向minio的url吧
-	Port          int64  `json:"port"`          // 目标题目的端口
-	Type          int64  `json:"type"`          //目标题目的类型，根据是tcp端口还是http端口来决定的
-	ChallengeId   string `json:"challengeId"`   // 题目ID
-	DockerImage   string `json:"dockerImage"`   // 镜像名称
-	Env           string `json:"env"`           // 环境变量,
+	UserId        string `json:"userId"`               // 用户ID
+	UserFilePath  string `json:"userFilePath"`         //minio中存储的用戶上傳的tar文件路径
+	CheckCommand  string `json:"checkCommand"`         // 检查命令
+	CheckFilePath string `json:"checkFilePath"`        // 检查文件的URL,應該是指向minio的url吧
+	Port          int64  `json:"port"`                 // 目标题目的端口
+	Type          int64  `json:"type"`                 //目标题目的类型，根据是tcp端口还是http端口来决定的
+	ChallengeId   string `json:"challengeId"`          // 题目ID
+	DockerImage   string `json:"dockerImage"`          // 被测题目运行镜像
+	CheckImage    string `json:"checkImage,omitempty"` // 运行检查脚本的镜像
+	Env           string `json:"env"`                  // 环境变量,
 }
 
 type UploadCompetitionScoreRequestUserCell struct {
