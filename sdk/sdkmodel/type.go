@@ -162,6 +162,7 @@ type ExportedTopologyBinding struct {
 
 type ExportedSubQuestion struct {
 	Id          uint64 `json:"id"`
+	Title       string `json:"title,omitempty"`
 	Description string `json:"description"`
 	Answer      string `json:"answer"`
 }
